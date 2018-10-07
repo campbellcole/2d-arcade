@@ -111,36 +111,20 @@ public class Snake implements Game {
 			} else if (grid[nextX][nextY] == BlockType.EMPTY || grid[nextX][nextY] == BlockType.FOOD) {
 				boolean ate = grid[nextX][nextY] == BlockType.FOOD;
 				grid[nextX][nextY] = BlockType.HEAD;
-				int nextBodyX = headX;
-				int nextBodyY = headY;
+				Integer[] store = new Integer[2];
+				Integer[] storeT = new Integer[2];
+				store[0] = headX;
+				store[1] = headY;
 				headX = nextX;
 				headY = nextY;
-				int currentSeg = 0;
-				int lastX = nextBodyX, lastY = nextBodyY;
-				for (int i = 0; i < length-1; i++) {
-					grid[nextBodyX][nextBodyY] = BlockType.BODY;
-					nextBodyX = segments.get(currentSeg)[0];
-					nextBodyY = segments.get(currentSeg)[1];
-					Integer[] last = new Integer[2];
-					last[0] = lastX;
-					last[1] = lastY;
-					lastX = nextBodyX;
-					lastY = nextBodyY;
-					segments.set(i, last);
-					currentSeg++;
+				for (int i = 0; i < length; i++) {
+					storeT = store;
+					grid[store[0]][store[1]] = BlockType.BODY;
+					store = segments.get(i);
+					segments.set(i, storeT);
 				}
-				Integer[] last = new Integer[2];
-				last[0] = lastX;
-				last[1] = lastY;
-				lastX = nextBodyX;
-				lastY = nextBodyY;
-				segments.set(length-1, last);
-				int endX = segments.get(length-1)[0];
-				int endY = segments.get(length-1)[1];
-				grid[endX][endY] = BlockType.EMPTY;
-				if (ate) {
-					eat(nextBodyX, nextBodyY);
-				}
+				grid[storeT[0]][storeT[1]] = BlockType.EMPTY;
+				if (ate) eat(storeT[0], storeT[1]);
 			}
 		}	
 	}

@@ -2,6 +2,7 @@ package com.campbell.arcade.dodgeblock;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.text.DecimalFormat;
 
@@ -22,8 +23,8 @@ public class DodgeBlockRenderer implements Renderer {
 	}
 
 	String powerup = "default";
-	int powerupTimer = 501;
-	int powerupCap = 500;
+	int powerupTimer = 240;
+	final int powerupCap = 240;
 	
 	@Override
 	public void draw() {
@@ -85,8 +86,11 @@ public class DodgeBlockRenderer implements Renderer {
 		}
 		if (powerupTimer < powerupCap) {
 			r.setFont(Settings.getFont(30));
+			FontMetrics m = r.getFontMetrics();
+			int cX = (Settings.POSTWIDTH - m.stringWidth(powerup))/2;
+			int cY = ((Settings.POSTHEIGHT - m.getHeight())/2);
 			r.setColor(Settings.TXT);
-			r.drawString(powerup, 10, 10);// TODO: change 10, 10 to an actual location
+			r.drawString(powerup, cX, cY);
 		}
 	}
 	

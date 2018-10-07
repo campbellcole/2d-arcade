@@ -21,8 +21,13 @@ public class DodgeBlockRenderer implements Renderer {
 		df = new DecimalFormat("#.##");
 	}
 
+	String powerup = "default";
+	int powerupTimer = 501;
+	int powerupCap = 500;
+	
 	@Override
 	public void draw() {
+		powerupTimer++;
 		float time = (float) instance.scoreTimer / 60f;
 		r.setColor(Settings.BG);
 		r.fillRect(0, 0, Settings.POSTWIDTH, Settings.POSTHEIGHT);
@@ -78,6 +83,16 @@ public class DodgeBlockRenderer implements Renderer {
 			r.setFont(Settings.getFont(16));
 			r.drawString(""+(int)time, Settings.INSET_LEFT+(time>=10 ? 5: 11), Settings.INSET_TOP+1);
 		}
+		if (powerupTimer < powerupCap) {
+			r.setFont(Settings.getFont(30));
+			r.setColor(Settings.TXT);
+			r.drawString(powerup, 10, 10);// TODO: change 10, 10 to an actual location
+		}
+	}
+	
+	public void powerup(String n) {
+		powerup = n;
+		powerupTimer = 0;
 	}
 
 }

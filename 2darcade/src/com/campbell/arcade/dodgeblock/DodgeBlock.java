@@ -189,20 +189,20 @@ public class DodgeBlock implements Game {
 	}
 	
 	private void powerup() {
-		int p = r.nextInt(4);
+		int p = r.nextInt(3);
 		switch (p) {
 		case 0:
 			wait = 20;
 			accelerationTimer = 0;
+			rn.powerup("Slow Down");
 			break;
 		case 1:
-			accelerationTimer = acceleration*60;
+			scoreTimer += 10*60;
+			rn.powerup("Score Up");
 			break;
 		case 2:
-			scoreTimer += 10*60;
-			break;
-		case 3:
 			waitTimer = -100;
+			rn.powerup("Freeze");
 			break;
 		}
 	}

@@ -105,9 +105,10 @@ public class Snake implements Game {
 				nextX--;
 				break;
 			}
-			if (grid[nextX][nextY] == BlockType.BODY) {
-				// TODO: hit
-				System.out.println("hit self");
+			if (nextX == grid.length || nextX == -1 || nextY == grid[0].length || nextY == -1) {
+				hit();
+			} else if (grid[nextX][nextY] == BlockType.BODY) {
+				hit();
 			} else if (grid[nextX][nextY] == BlockType.EMPTY || grid[nextX][nextY] == BlockType.FOOD) {
 				boolean ate = grid[nextX][nextY] == BlockType.FOOD;
 				grid[nextX][nextY] = BlockType.HEAD;
@@ -136,6 +137,10 @@ public class Snake implements Game {
 		coords[1] = y;
 		segments.add(coords);
 		grid[rn.nextInt(grid.length)][rn.nextInt(grid[0].length)] = BlockType.FOOD;
+	}
+	
+	private void hit() {
+		System.out.println("hit, lose here");
 	}
 	
 	private void resetKeys() {

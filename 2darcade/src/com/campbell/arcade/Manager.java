@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -23,6 +24,7 @@ import com.campbell.arcade.common.Settings;
 import com.campbell.arcade.dodgeblock.DodgeBlockMenu;
 import com.campbell.arcade.instructions.Instructions;
 import com.campbell.arcade.introscene.IntroScene;
+import com.campbell.arcade.platformer.Platformer;
 import com.campbell.arcade.snake.Snake;
 
 public class Manager extends JFrame implements Runnable {
@@ -94,6 +96,10 @@ public class Manager extends JFrame implements Runnable {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
+		
+		// remove later
+		JOptionPane.showMessageDialog(this, "This program is a work in progress. There will be bugs.");
+		
 		setSize(Settings.WIDTH, Settings.HEIGHT);
 		setIconImage(Settings.getIcon());
 		setResizable(false);
@@ -111,6 +117,7 @@ public class Manager extends JFrame implements Runnable {
 		games.add(new Instructions(null));
 		games.add(new DodgeBlockMenu(null));
 		games.add(new Snake(null));
+		games.add(new Platformer(null));
 	}
 	
 	boolean justSwitched = true;

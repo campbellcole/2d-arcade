@@ -45,10 +45,10 @@ public class DodgeBlockRenderer implements Renderer {
 					r.setColor(Color.WHITE);
 					break;
 				case EMPTY:
-					r.setColor(new Color(190,190,190));
+					r.setColor(Settings.BG);
 					break;
 				case POWERUP:
-					r.setColor(Color.decode("#891880"));
+					r.setColor(Settings.SEL);
 					break;
 				}
 				r.fillRect(xOffset, yOffset, instance.BLOCKSIZE, instance.BLOCKSIZE);

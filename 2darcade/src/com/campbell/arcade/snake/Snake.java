@@ -60,7 +60,7 @@ public class Snake implements Game {
 	
 	boolean pendingUp = false, pendingDown = false, pendingLeft = false, pendingRight = false;
 	
-	int wait = 10;
+	int wait = 7;
 	int waitTimer = 0;
 	
 	int length = 1;
@@ -136,7 +136,13 @@ public class Snake implements Game {
 		coords[0] = x;
 		coords[1] = y;
 		segments.add(coords);
-		grid[rn.nextInt(grid.length)][rn.nextInt(grid[0].length)] = BlockType.FOOD;
+		int fX = rn.nextInt(grid.length);
+		int fY = rn.nextInt(grid[0].length);
+		while (grid[fX][fY]==BlockType.BODY || grid[fX][fY]==BlockType.HEAD) {
+			fX = rn.nextInt(grid.length);
+			fY = rn.nextInt(grid[0].length);
+		}
+		grid[fX][fY] = BlockType.FOOD;
 	}
 	
 	private void hit() {

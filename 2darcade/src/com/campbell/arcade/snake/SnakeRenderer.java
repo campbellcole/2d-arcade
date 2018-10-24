@@ -29,13 +29,13 @@ public class SnakeRenderer implements Renderer {
 				switch (grid[x][y]) {
 				case HEAD:
 				case BODY:
-					g.setColor(Color.BLACK);
+					g.setColor(new Color(80,80,80));
 					break;
 				case EMPTY:
 					g.setColor(new Color(190,190,190));
 					break;
 				case FOOD:
-					g.setColor(Color.decode("#891880"));
+					g.setColor(Settings.SEL);
 					break;
 				}
 				g.fillRect(xOffset, yOffset, instance.BLOCKSIZE, instance.BLOCKSIZE);
@@ -44,6 +44,9 @@ public class SnakeRenderer implements Renderer {
 			yOffset = 0;
 			xOffset += instance.BLOCKSIZE;
 		}
+		g.setColor(Settings.TXT);
+		g.setFont(Settings.getFont(16));
+		g.drawString(""+(int)instance.length, Settings.INSET_LEFT+(instance.length>=10 ? 5: 11), Settings.INSET_TOP+1);
 	}
 
 }

@@ -8,13 +8,13 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -22,9 +22,10 @@ import com.campbell.arcade.common.Game;
 import com.campbell.arcade.common.GameKeyListener;
 import com.campbell.arcade.common.Settings;
 import com.campbell.arcade.dodgeblock.DodgeBlockMenu;
+import com.campbell.arcade.instructions.Instructions;
 import com.campbell.arcade.introscene.IntroScene;
+import com.campbell.arcade.platformer.Platformer;
 import com.campbell.arcade.snake.Snake;
-import com.campbell.arcade.testgame.TestGame;
 
 public class Manager extends JFrame implements Runnable {
 	
@@ -72,15 +73,14 @@ public class Manager extends JFrame implements Runnable {
 		g = (Graphics2D) img.getGraphics();
 		Settings.reloadPost();
 		setSize(Settings.POSTWIDTH, Settings.POSTHEIGHT);
+		setLocationRelativeTo(null);
 		return g;
 	}
 	
 	private void initialize() {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		ClassLoader cl = getClass().getClassLoader();
-		File f = new File(cl.getResource("ka1.ttf").getFile());
 		try {
-			Font fn = Font.createFont(Font.TRUETYPE_FONT, f);
+			Font fn = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/res/ka1.ttf"));
 			ge.registerFont(fn);
 			Settings.FONT = fn.getFontName();
 		} catch (FontFormatException | IOException e) {
@@ -96,6 +96,10 @@ public class Manager extends JFrame implements Runnable {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
+		
+		// remove later
+		JOptionPane.showMessageDialog(this, "This program is a work in progress. There will be bugs.");
+		
 		setSize(Settings.WIDTH, Settings.HEIGHT);
 		setIconImage(Settings.getIcon());
 		setResizable(false);
@@ -110,9 +114,10 @@ public class Manager extends JFrame implements Runnable {
 	}
 	
 	private void registerGames() {
-		games.add(new TestGame(null));
+		games.add(new Instructions(null));
 		games.add(new DodgeBlockMenu(null));
 		games.add(new Snake(null));
+		games.add(new Platformer(null));
 	}
 	
 	boolean justSwitched = true;

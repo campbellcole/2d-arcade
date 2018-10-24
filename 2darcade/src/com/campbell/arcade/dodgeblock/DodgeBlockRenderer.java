@@ -68,8 +68,8 @@ public class DodgeBlockRenderer implements Renderer {
 			// wait
 			r.drawString(instance.wait+"", Settings.INSET_LEFT, Settings.INSET_TOP);
 			
-			// acceleration
-			r.drawString(instance.acceleration+"", Settings.INSET_LEFT, Settings.INSET_TOP+15);
+			// waitTimer
+			r.drawString(instance.waitTimer+"", Settings.INSET_LEFT, Settings.INSET_TOP+15);
 			
 			// acceleration timer
 			r.drawString(instance.accelerationTimer+"", Settings.INSET_LEFT, Settings.INSET_TOP+30);

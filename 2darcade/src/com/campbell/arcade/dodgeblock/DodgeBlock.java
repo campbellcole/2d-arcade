@@ -136,7 +136,7 @@ public class DodgeBlock implements Game {
 						pendingRight = false;
 					}
 					// NOTE: we reset all pending because the player will move but the current index will be different and will spawn multiple players
-				} else if ((grid[x][y] == BlockType.OBSTACLE || grid[x][y] == BlockType.POWERUP)&& waitTimer == wait) { // for each obstacle
+				} else if ((grid[x][y] == BlockType.OBSTACLE || grid[x][y] == BlockType.POWERUP)&& waitTimer >= wait) { // for each obstacle
 					BlockType next = grid[x][y];
 					if (x == 0) { // if obstacle is at the end of the screen
 						grid[x][y] = BlockType.EMPTY; // remove obstacle
@@ -155,7 +155,7 @@ public class DodgeBlock implements Game {
 				}
 			}
 		}
-		if (waitTimer == wait) { // if the wait timer is equal to the amount of time to wait, spawn a new obstacle and reset wait timer
+		if (waitTimer >= wait) { // if the wait timer is equal to the amount of time to wait, spawn a new obstacle and reset wait timer
 			if (difficulty == 1) {
 				spawnObstacle();
 				spawnObstacle();
@@ -209,9 +209,9 @@ public class DodgeBlock implements Game {
 	
 	private void playerHit() {
 		if (!DodgeBlockSettings.GOD || !DodgeBlockSettings.DEBUG) {
-			float time = (float) scoreTimer / 60f;
+			int score = scoreTimer / 60;
 			DecimalFormat df = new DecimalFormat("#.##");
-			JOptionPane.showMessageDialog(Manager.instance, "You got hit! Your time was: " + df.format(time) + " seconds");
+			JOptionPane.showMessageDialog(Manager.instance, "You got hit! Your score was: " + df.format(score));
 			Manager.instance.setGame(this);
 		}
 	}

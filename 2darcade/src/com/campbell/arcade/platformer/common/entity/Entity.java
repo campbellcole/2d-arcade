@@ -1,4 +1,4 @@
-package com.campbell.arcade.platformer.common;
+package com.campbell.arcade.platformer.common.entity;
 
 import java.net.URL;
 
@@ -10,7 +10,7 @@ public class Entity {
 	URL texLoc;
 	
 	public Entity(String name) {
-		texLoc = Textures.getURL("placeholder.png");
+		texLoc = Textures.getURL(name+".png");
 		this.name = name;
 		Textures.register(name, texLoc);
 	}

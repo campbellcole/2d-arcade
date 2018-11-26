@@ -79,7 +79,7 @@ public class DodgeBlockMenu implements Game {
 
 	@Override
 	public String getDescription() {
-		return "Dodge blocks coming in from the right side of the screen, and try to last as long as you can. There are 4 difficulties.";
+		return "Dodge blocks coming in from the right side of the screen, and try to last as long as you can. There are 3 difficulties.";
 	}
 
 }

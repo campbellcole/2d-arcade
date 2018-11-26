@@ -5,13 +5,15 @@ import java.awt.Graphics2D;
 import com.campbell.arcade.Manager;
 import com.campbell.arcade.common.Game;
 import com.campbell.arcade.common.Renderer;
-import com.campbell.arcade.platformer.common.Entity;
-import com.campbell.arcade.platformer.common.Player;
+import com.campbell.arcade.platformer.level.Level;
+import com.campbell.arcade.platformer.level.LevelHandler;
 
 public class Platformer implements Game {
 	
 	Graphics2D g;
 	PlatformerRenderer r;
+	
+	Level currentLevel;
 	
 	public Platformer(Graphics2D g) {
 		this.g = g;
@@ -19,10 +21,11 @@ public class Platformer implements Game {
 
 	@Override
 	public void initialize() {
-		// temp - load textures for testing
-		new Entity("placeholder");
-		new Player();
 		// read levels
+		LevelHandler.initialize();
+		// temporary - display level 0
+		currentLevel = new Level(LevelHandler.getLevels().get(0));
+		currentLevel.load();
 	}
 
 	@Override

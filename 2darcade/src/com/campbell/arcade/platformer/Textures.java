@@ -22,6 +22,10 @@ public class Textures {
 		}
 	}
 	
+	public static void register(String name, Image image) {
+		textures.put(name, image);
+	}
+	
 	public static Image get(String name) {
 		return textures.get(name);
 	}

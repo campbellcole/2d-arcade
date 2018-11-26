@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import com.campbell.arcade.Manager;
 import com.campbell.arcade.common.Game;
 import com.campbell.arcade.common.GameKeyListener;
@@ -146,7 +148,8 @@ public class Snake implements Game {
 	}
 	
 	private void hit() {
-		System.out.println("hit, lose here");
+		JOptionPane.showMessageDialog(Manager.instance, "You lost! Your score was: " + length, "Game over!", JOptionPane.PLAIN_MESSAGE);
+		Manager.instance.setGame(new Snake(null));
 	}
 	
 	private void resetKeys() {

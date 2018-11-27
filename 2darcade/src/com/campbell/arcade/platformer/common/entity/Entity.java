@@ -1,26 +1,11 @@
 package com.campbell.arcade.platformer.common.entity;
 
-import java.net.URL;
+import com.campbell.arcade.platformer.common.Drawable;
 
-import com.campbell.arcade.platformer.Textures;
-
-public class Entity {
-	
-	String name;
-	URL texLoc;
+public class Entity extends Drawable {
 	
 	public Entity(String name) {
-		texLoc = Textures.getURL(name+".png");
-		this.name = name;
-		Textures.register(name, texLoc);
-	}
-	
-	public URL getTexture() {
-		return texLoc;
-	}
-	
-	public String getName() {
-		return name;
+		super(name);
 	}
 	
 }

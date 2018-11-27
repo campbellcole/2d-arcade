@@ -4,6 +4,7 @@ public class Placeholder extends Entity {
 
 	public Placeholder() {
 		super("placeholder");
+		this.register();
 	}
 	
 }

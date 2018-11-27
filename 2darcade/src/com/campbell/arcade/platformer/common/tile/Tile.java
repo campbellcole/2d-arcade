@@ -1,9 +1,11 @@
 package com.campbell.arcade.platformer.common.tile;
 
-public class Tile {
+import com.campbell.arcade.platformer.common.Drawable;
+
+public class Tile extends Drawable {
 	
 	public Tile(String name) {
-		
+		super(name);
 	}
 	
 }

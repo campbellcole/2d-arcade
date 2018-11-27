@@ -19,16 +19,26 @@ public class LevelReader {
 					len = (PlatformerSettings.WIDTH/2)/16;
 					break;
 				case 'r':
-					len = (PlatformerSettings.WIDTH/16)-(ix);
+					len = (PlatformerSettings.WIDTH/16)-(ix)+1;
 					break;
+				case '(':
+					int[] nPtr = countFrom(x+2, c);
+					len = nPtr[0];
+					x = nPtr[1];
 				}
-				for (int y = 0; y < len; y++) {
+				for (int y = 0; y < len-1; y++) {
 					i[ix++]=(byte)mult;
 				}
 				x++;
 				break;
 			case '-':
-				ix -= 1;
+				len = 1;
+				if (c[x+1]=='x') {
+					int[] nPtr = countFrom(x+3, c);
+					len = nPtr[0];
+					x = nPtr[1];
+				}
+				ix -= len;
 				break;
 			case '+':
 				ix += 1;
@@ -37,6 +47,14 @@ public class LevelReader {
 			}
 		}
 		return i;
+	}
+	
+	private static int[] countFrom(int ptr, char[] arr) {
+		String lenS = "";
+		while (arr[ptr] != ')') {
+			lenS += arr[ptr++];
+		}
+		return new int[] { Integer.parseInt(lenS), ptr};
 	}
 	
 }

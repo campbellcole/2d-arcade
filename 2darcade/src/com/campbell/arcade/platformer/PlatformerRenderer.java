@@ -5,6 +5,7 @@ import java.awt.Image;
 
 import com.campbell.arcade.common.Renderer;
 import com.campbell.arcade.common.Settings;
+import com.campbell.arcade.platformer.common.Drawable;
 import com.campbell.arcade.platformer.level.Dictionary;
 
 public class PlatformerRenderer implements Renderer {
@@ -21,11 +22,12 @@ public class PlatformerRenderer implements Renderer {
 	public void draw() {
 		g.setColor(Settings.BG);
 		g.fillRect(0, 0, Settings.POSTWIDTH, Settings.POSTHEIGHT);
+		// temporary to test level loading
 		int xOffset = 0, yOffset = 0;
 		for (int x = 0; x < instance.currentLevel.data.length; x++) {
 			for (int y = 0; y < instance.currentLevel.data[0].length; y++) {
 				char cur = (char) instance.currentLevel.data[x][y];
-				String texName = Dictionary.d.get(cur).getName();
+				Class<? extends Drawable> texName = Dictionary.d.get(cur);
 				Image img = Textures.get(texName);
 				g.drawImage(img, xOffset, yOffset, null);
 				xOffset += 16;
@@ -37,6 +39,7 @@ public class PlatformerRenderer implements Renderer {
 		g.setColor(Settings.TXT);
 		g.drawString(instance.currentLevel.id, 0, 16);
 		g.drawString(instance.currentLevel.name, 0, 32);
+		
 	}
 	
 }

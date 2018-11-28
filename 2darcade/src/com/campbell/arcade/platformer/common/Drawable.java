@@ -16,11 +16,11 @@ public class Drawable {
 	}
 	
 	public void register() {
-		Textures.register(name, texLoc);
+		Textures.register(this.getClass(), texLoc);
 	}
 	
 	public void register(Image image) {
-		Textures.register(name, image);
+		Textures.register(this.getClass(), image);
 	}
 	
 	public URL getTexture() {

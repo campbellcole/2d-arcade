@@ -19,14 +19,14 @@ public class LevelReader {
 					len = (PlatformerSettings.WIDTH/2)/16;
 					break;
 				case 'r':
-					len = (PlatformerSettings.WIDTH/16)-(ix)+1;
+					len = (PlatformerSettings.WIDTH/16)-(ix);
 					break;
 				case '(':
 					int[] nPtr = countFrom(x+2, c);
-					len = nPtr[0];
+					len = nPtr[0]-1;
 					x = nPtr[1];
 				}
-				for (int y = 0; y < len-1; y++) {
+				for (int y = 0; y < len; y++) {
 					i[ix++]=(byte)mult;
 				}
 				x++;

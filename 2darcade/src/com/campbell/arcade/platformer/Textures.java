@@ -8,34 +8,35 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import com.campbell.arcade.Manager;
+import com.campbell.arcade.platformer.common.Drawable;
 
 public class Textures {
 	
-	private static HashMap<String, Image> textures = new HashMap<String, Image>();
+	private static HashMap<Class<? extends Drawable>, Image> textures = new HashMap<Class<? extends Drawable>, Image>();
 	
-	public static void register(String name, URL loc) {
+	public static void register(Class<? extends Drawable> clazz, URL loc) {
 		try {
 			Image img = ImageIO.read(loc);
-			textures.put(name, img);
+			textures.put(clazz, img);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void register(String name, Image image) {
-		textures.put(name, image);
+	public static void register(Class<? extends Drawable> clazz, Image image) {
+		textures.put(clazz, image);
 	}
 	
-	public static Image get(String name) {
-		return textures.get(name);
+	public static Image get(Class<? extends Drawable> clazz) {
+		return textures.get(clazz);
 	}
 	
-	public static boolean didLoadTexture(String name) {
-		return textures.keySet().contains(name);
+	public static boolean didLoadTexture(Class<? extends Drawable> clazz) {
+		return textures.keySet().contains(clazz);
 	}
 	
 	public static void reset() {
-		textures = new HashMap<String, Image>();
+		textures = new HashMap<Class<? extends Drawable>, Image>();
 	}
 	
 	public static URL getURL(String name) {

@@ -6,5 +6,9 @@ public class Player extends Entity {
 		super("player");
 		this.register();
 	}
+	
+	public void tick() {
+		this.move();
+	}
 
 }

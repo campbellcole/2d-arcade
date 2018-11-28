@@ -12,8 +12,6 @@ public class LevelHandler {
 	private static List<File> levels = new ArrayList<File>();
 	
 	public static void initialize() {
-		// load textures
-		Dictionary.initialize();
 		// locate (do not load) levels
 		try {
 			File f = new File(Manager.class.getResource("/res/platformer/levels").toURI());

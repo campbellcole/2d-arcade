@@ -70,11 +70,11 @@ public class LevelReader {
 		for (int x = 0; x < data.length; x++) {
 			for (int y = 0; y < data[x].length; y++) {
 				Class<? extends Drawable> type = Dictionary.d.get((char)data[x][y]);
-				Constructor<?> ct = type.getConstructor();
-				Object inst = ct.newInstance();
-				if (type.equals(Entity.class)) {
+				Constructor<?> ct = type.getConstructor(int.class, int.class);
+				Drawable inst = (Drawable) ct.newInstance(new Object[] { (y*16), (x*16) });
+				if (type.getSuperclass().equals(Entity.class)) {
 					ents.add((Entity)inst);
-				} else if (type.equals(Tile.class)) {
+				} else if (type.getSuperclass().equals(Tile.class)) {
 					tiles.add((Tile)inst);
 				}
 			}

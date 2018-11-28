@@ -2,8 +2,8 @@ package com.campbell.arcade.platformer.common.entity;
 
 public class Player extends Entity {
 	
-	public Player() {
-		super("player");
+	public Player(int x, int y) {
+		super("player", x, y);
 		this.register();
 	}
 	

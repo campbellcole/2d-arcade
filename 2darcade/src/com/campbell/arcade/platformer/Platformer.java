@@ -31,18 +31,6 @@ public class Platformer implements Game {
 		// read levels
 		LevelHandler.initialize();
 		
-		// temporary - load all textures
-		// in the future, textures will only be loaded when needed, but this forces them all to load
-		for (Class<? extends Drawable> c : Dictionary.d.values()) {
-			Constructor<?> ctor;
-			try {
-				ctor = c.getConstructor();
-				ctor.newInstance();
-			} catch (Exception e) { // bad but temporary
-				e.printStackTrace();
-			}
-		}
-		
 		// temporary - display level 0
 		currentLevel = new Level(LevelHandler.getLevels().get(0));
 		currentLevel.load();
@@ -52,6 +40,7 @@ public class Platformer implements Game {
 	public void update() {
 		for (Entity ent : currentLevel.ld.getEntities()) {
 			ent.tick();
+			ent.turn(5); // temporary
 		}
 	}
 

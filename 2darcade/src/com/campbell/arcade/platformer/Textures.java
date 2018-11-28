@@ -16,15 +16,19 @@ public class Textures {
 	
 	public static void register(Class<? extends Drawable> clazz, URL loc) {
 		try {
-			Image img = ImageIO.read(loc);
-			textures.put(clazz, img);
+			if (!textures.containsKey(clazz)) {
+				Image img = ImageIO.read(loc);
+				textures.put(clazz, img);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void register(Class<? extends Drawable> clazz, Image image) {
-		textures.put(clazz, image);
+		if (!textures.containsKey(clazz)) {
+			textures.put(clazz, image);
+		}
 	}
 	
 	public static Image get(Class<? extends Drawable> clazz) {

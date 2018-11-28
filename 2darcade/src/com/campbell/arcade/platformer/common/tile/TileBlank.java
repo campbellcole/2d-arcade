@@ -7,8 +7,8 @@ import com.campbell.arcade.common.Settings;
 
 public class TileBlank extends Tile {
 
-	public TileBlank() {
-		super("tileblank");
+	public TileBlank(int x, int y) {
+		super("tileblank", x, y);
 		BufferedImage b = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = (Graphics2D) b.getGraphics();
 		g.setColor(Settings.BG);

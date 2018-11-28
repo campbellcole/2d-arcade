@@ -10,9 +10,13 @@ public class Drawable {
 	String name;
 	URL texLoc;
 	
-	public Drawable(String name) {
+	public int x, y;
+	
+	public Drawable(String name, int x, int y) {
 		texLoc = Textures.getURL(name+".png");
 		this.name = name;
+		this.x = x;
+		this.y = y;
 	}
 	
 	public void register() {

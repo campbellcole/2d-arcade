@@ -4,14 +4,13 @@ import com.campbell.arcade.platformer.common.Drawable;
 
 public class Entity extends Drawable {
 	
-	int x, y;
-	double direction;
-	int velocity;
+	public double direction;
+	public int velocity;
 	
 	double d_r = Math.PI/180d;
 	
-	public Entity(String name) {
-		super(name);
+	public Entity(String name, int x, int y) {
+		super(name, x, y);
 		x = y = velocity = 0;
 		direction = 0.0f;
 	}

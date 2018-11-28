@@ -1,6 +1,12 @@
 package com.campbell.arcade.platformer.level;
 
+import java.lang.reflect.Constructor;
+import java.util.List;
+
 import com.campbell.arcade.platformer.PlatformerSettings;
+import com.campbell.arcade.platformer.common.Drawable;
+import com.campbell.arcade.platformer.common.entity.Entity;
+import com.campbell.arcade.platformer.common.tile.Tile;
 
 public class LevelReader {
 	
@@ -55,6 +61,27 @@ public class LevelReader {
 			lenS += arr[ptr++];
 		}
 		return new int[] { Integer.parseInt(lenS), ptr};
+	}
+	
+	public static LevelData interpret(byte[][] data) throws Exception {
+		LevelData dat = new LevelData();
+		List<Entity> ents = dat.getEntities();
+		List<Tile> tiles = dat.getTiles();
+		for (int x = 0; x < data.length; x++) {
+			for (int y = 0; y < data[x].length; y++) {
+				Class<? extends Drawable> type = Dictionary.d.get((char)data[x][y]);
+				Constructor<?> ct = type.getConstructor();
+				Object inst = ct.newInstance();
+				if (type.equals(Entity.class)) {
+					ents.add((Entity)inst);
+				} else if (type.equals(Tile.class)) {
+					tiles.add((Tile)inst);
+				}
+			}
+		}
+		dat.setEntities(ents);
+		dat.setTiles(tiles);
+		return dat;
 	}
 	
 }

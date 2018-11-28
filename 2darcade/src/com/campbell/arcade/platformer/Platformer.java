@@ -2,12 +2,12 @@ package com.campbell.arcade.platformer;
 
 import java.awt.Graphics2D;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import com.campbell.arcade.Manager;
 import com.campbell.arcade.common.Game;
 import com.campbell.arcade.common.Renderer;
 import com.campbell.arcade.platformer.common.Drawable;
+import com.campbell.arcade.platformer.common.entity.Entity;
 import com.campbell.arcade.platformer.level.Dictionary;
 import com.campbell.arcade.platformer.level.Level;
 import com.campbell.arcade.platformer.level.LevelHandler;
@@ -32,6 +32,7 @@ public class Platformer implements Game {
 		LevelHandler.initialize();
 		
 		// temporary - load all textures
+		// in the future, textures will only be loaded when needed, but this forces them all to load
 		for (Class<? extends Drawable> c : Dictionary.d.values()) {
 			Constructor<?> ctor;
 			try {
@@ -49,7 +50,9 @@ public class Platformer implements Game {
 
 	@Override
 	public void update() {
-		
+		for (Entity ent : currentLevel.ld.getEntities()) {
+			ent.tick();
+		}
 	}
 
 	@Override

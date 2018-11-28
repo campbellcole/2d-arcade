@@ -34,7 +34,7 @@ public class Entity extends Drawable {
 	}
 	
 	public void tick() {
-		
+		this.move();
 	}
 	
 }

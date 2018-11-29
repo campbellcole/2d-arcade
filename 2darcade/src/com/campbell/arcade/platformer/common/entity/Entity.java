@@ -20,8 +20,8 @@ public class Entity extends Drawable {
 	public void move() { move(2); }
 	
 	public void move(int steps) {
-		int newX = (int) Math.round(x + Math.cos(direction) * steps) * velocity;
-		int newY = (int) Math.round(y + Math.sin(direction) * steps);
+		int newX = (int) Math.round(x + Math.cos(direction) * steps * velocity);
+		int newY = (int) Math.round(y + Math.sin(direction) * steps * velocity);
 		x = newX;
 		y = newY;
 	}

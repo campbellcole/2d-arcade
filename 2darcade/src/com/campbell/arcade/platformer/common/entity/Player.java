@@ -29,6 +29,8 @@ public class Player extends Entity {
 		}
 		if (keys.indexOf(KeyEvent.VK_SHIFT) != -1) {
 			this.velocity = 2;
+		} else {
+			this.velocity = 1;
 		}
 		if (direction != -1) {
 			this.setDirection(direction);

@@ -9,7 +9,7 @@ import com.campbell.arcade.platformer.PlatformerSettings;
 
 public class Level {
 	
-	public byte[][] data = new byte[PlatformerSettings.HEIGHT/16][PlatformerSettings.WIDTH/16];
+	public byte[][][] data = new byte[PlatformerSettings.HEIGHT/16][PlatformerSettings.WIDTH/16][2];
 	
 	File f;
 	

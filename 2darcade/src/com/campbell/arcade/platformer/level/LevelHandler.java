@@ -9,7 +9,7 @@ import com.campbell.arcade.Manager;
 
 public class LevelHandler {
 	
-	private static List<File> levels = new ArrayList<File>();
+	private static List<Level> levels = new ArrayList<Level>();
 	
 	public static void initialize() {
 		// locate (do not load) levels
@@ -17,14 +17,14 @@ public class LevelHandler {
 			File f = new File(Manager.class.getResource("/res/platformer/levels").toURI());
 			if (f.isDirectory()) {
 				for (File lf : f.listFiles()) {
-					levels.add(lf);
+					levels.add(new Level(lf));
 					System.out.println("level found: " + lf.getName());
 				}
 			}
 		} catch (URISyntaxException e) {}
 	}
 	
-	public static List<File> getLevels() {
+	public static List<Level> getLevels() {
 		return levels;
 	}
 	

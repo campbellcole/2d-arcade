@@ -10,9 +10,24 @@ import com.campbell.arcade.platformer.common.tile.Tile;
 
 public class LevelReader {
 	
-	public static byte[] interpret(String s) {
+	public static byte[][] interpret(String s) {
+		byte[][] i = new byte[PlatformerSettings.WIDTH/16][2];
+		int tLen = s.indexOf('&');
+		char[] tc = s.substring(0, tLen).toCharArray();
+		byte[] tdata = parse(tc);
+		char[] ec = s.substring(tLen).toCharArray();
+		byte[] edata = parse(ec);
+		for (int y = 0; y < tdata.length; y++) {
+			i[y][0]=tdata[y];
+		}
+		for (int y = 0; y < edata.length; y++) {
+			i[y][1]=edata[y];
+		}
+		return i;
+	}
+	
+	private static byte[] parse(char[] c) {
 		byte[] i = new byte[PlatformerSettings.WIDTH/16];
-		char[] c = s.toCharArray();
 		int ix = 0;
 		for (int x = 0; x < c.length; x++) {
 			switch (c[x]) {
@@ -47,6 +62,11 @@ public class LevelReader {
 				ix -= len;
 				break;
 			case '+':
+				if (c[x+1]=='x') {
+					int[] nPtr = countFrom(x+3, c);
+					len = nPtr[0];
+					x = nPtr[1];
+				}
 				ix += 1;
 			default:
 				i[ix++]=(byte)c[x];
@@ -63,25 +83,30 @@ public class LevelReader {
 		return new int[] { Integer.parseInt(lenS), ptr};
 	}
 	
-	public static LevelData interpret(byte[][] data) throws Exception {
+	public static LevelData interpret(byte[][][] data) throws Exception {
 		LevelData dat = new LevelData();
 		List<Entity> ents = dat.getEntities();
 		List<Tile> tiles = dat.getTiles();
 		for (int x = 0; x < data.length; x++) {
 			for (int y = 0; y < data[x].length; y++) {
-				Class<? extends Drawable> type = Dictionary.d.get((char)data[x][y]);
-				Constructor<?> ct = type.getConstructor(int.class, int.class);
-				Drawable inst = (Drawable) ct.newInstance(new Object[] { (y*16), (x*16) });
-				if (type.getSuperclass().equals(Entity.class)) {
-					ents.add((Entity)inst);
-				} else if (type.getSuperclass().equals(Tile.class)) {
-					tiles.add((Tile)inst);
-				}
+				Drawable tile = newInstance((char)data[x][y][0], y, x);
+				Drawable ent = newInstance((char)data[x][y][1], y, x);
+				if (tile instanceof Tile) tiles.add((Tile)tile);
+				if (ent instanceof Entity) ents.add((Entity)ent);
 			}
 		}
 		dat.setEntities(ents);
 		dat.setTiles(tiles);
 		return dat;
+	}
+	
+	private static Drawable newInstance(char type, int x, int y) throws Exception {
+		Class<? extends Drawable> c = Dictionary.d.get(type);
+		if (c == null) {
+			return null;
+		}
+		Constructor<?> ct = c.getConstructor(int.class, int.class);
+		return (Drawable) ct.newInstance(new Object[] { (x*16), (y*16) } );
 	}
 	
 }

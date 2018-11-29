@@ -1,12 +1,10 @@
 package com.campbell.arcade.platformer;
 
 import java.awt.Graphics2D;
-import java.lang.reflect.Constructor;
 
 import com.campbell.arcade.Manager;
 import com.campbell.arcade.common.Game;
 import com.campbell.arcade.common.Renderer;
-import com.campbell.arcade.platformer.common.Drawable;
 import com.campbell.arcade.platformer.common.entity.Entity;
 import com.campbell.arcade.platformer.level.Dictionary;
 import com.campbell.arcade.platformer.level.Level;
@@ -32,7 +30,7 @@ public class Platformer implements Game {
 		LevelHandler.initialize();
 		
 		// temporary - display level 0
-		currentLevel = new Level(LevelHandler.getLevels().get(0));
+		currentLevel = LevelHandler.getLevels().get(0);
 		currentLevel.load();
 	}
 

@@ -3,6 +3,7 @@ package com.campbell.arcade.common;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GameKeyListener implements KeyListener {
 
@@ -27,7 +28,9 @@ public class GameKeyListener implements KeyListener {
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+		pending.removeAll(Collections.singleton(e.getKeyCode()));
+	}
 
 	public ArrayList<Integer> getPendingKeys() {
 		return pending;

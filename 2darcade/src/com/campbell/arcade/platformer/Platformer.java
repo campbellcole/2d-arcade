@@ -38,7 +38,6 @@ public class Platformer implements Game {
 	public void update() {
 		for (Entity ent : currentLevel.ld.getEntities()) {
 			ent.tick();
-			ent.turn(5); // temporary
 		}
 	}
 

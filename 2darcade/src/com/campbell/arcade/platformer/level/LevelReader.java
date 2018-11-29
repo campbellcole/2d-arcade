@@ -100,13 +100,13 @@ public class LevelReader {
 		return dat;
 	}
 	
-	private static Drawable newInstance(char type, int x, int y) throws Exception {
+	private static Drawable newInstance(char type, int y, int x) throws Exception {
 		Class<? extends Drawable> c = Dictionary.d.get(type);
 		if (c == null) {
 			return null;
 		}
 		Constructor<?> ct = c.getConstructor(int.class, int.class);
-		return (Drawable) ct.newInstance(new Object[] { (x*16), (y*16) } );
+		return (Drawable) ct.newInstance(new Object[] { (y*16), (x*16) } );
 	}
 	
 }

@@ -15,7 +15,7 @@ public class Dictionary {
 		
 		d.put('P', Player.class);
 		d.put('0', TileBlank.class);
-		d.put((char)0x0, TilePlaceholder.class);
+		d.put((char)0x0, TileBlank.class);
 		
 	}
 	

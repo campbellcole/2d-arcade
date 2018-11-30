@@ -22,16 +22,12 @@ public class Entity extends Drawable {
 	public void move() { move(2); }
 	
 	public void move(int steps) {
-		for (Tile t : lvl.ld.getTiles()) {
-			// TODO: get this to work
-			if (isTouching(t)) {
-				if (t.isSolid()) {
-					return;
-				}
-			}
-		}
 		int newX = (int) Math.round(x + Math.cos(direction) * steps * velocity);
 		int newY = (int) Math.round(y + Math.sin(direction) * steps * velocity);
+		if (isTouchingEdge(newX, newY)) return;
+		for (Tile t : lvl.ld.getTiles()) {
+			if (isOverlapping(newX, newY, t.x, t.y) && t.isSolid()) return;
+		}
 		x = newX;
 		y = newY;
 	}

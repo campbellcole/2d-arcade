@@ -1,9 +1,9 @@
 package com.campbell.arcade.platformer.common;
 
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.net.URL;
 
+import com.campbell.arcade.platformer.PlatformerSettings;
 import com.campbell.arcade.platformer.Textures;
 import com.campbell.arcade.platformer.level.Level;
 
@@ -15,14 +15,11 @@ public class Drawable {
 	public int x, y;
 	public Level lvl;
 	
-	public Rectangle bounds;
-	
 	public Drawable(String name, int x, int y, Level lvl) {
 		texLoc = Textures.getURL(name+".png");
 		this.name = name;
 		this.x = x;
 		this.y = y;
-		this.bounds = new Rectangle(x, y, 16, 16);
 		this.lvl = lvl;
 	}
 	
@@ -42,13 +39,20 @@ public class Drawable {
 		return name;
 	}
 	
-	public boolean isTouching(Drawable b) {
-		//System.out.println(b.getName());
-		boolean x1 = bounds.x < b.bounds.x + b.bounds.height;
-		boolean x2 = bounds.x + bounds.width > b.bounds.x;
-		boolean y1 = bounds.y < b.bounds.y + b.bounds.height;
-		boolean y2 = bounds.y + bounds.height > b.bounds.y;
-		return x1 && x2 && y1 && y2;
+	public boolean isOverlapping(int x1, int y1, int x2, int y2) {
+		boolean x1b = x1 < x2 + 16;
+		boolean x2b = x1 + 16 > x2;
+		boolean y1b = y1 < y2 + 16;
+		boolean y2b = y1 + 16 > y2;
+		return x1b && x2b && y1b && y2b;
+	}
+	
+	public boolean isTouchingEdge(int x, int y) {
+		boolean x1 = x==0;
+		boolean x2 = x>=PlatformerSettings.WIDTH-16;
+		boolean y1 = y==0;
+		boolean y2 = y>=PlatformerSettings.HEIGHT-16;
+		return x1 || x2 || y1 || y2;
 	}
 	
 }

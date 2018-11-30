@@ -15,6 +15,7 @@ public class Player extends Entity {
 	
 	public void tick() {
 		ArrayList<Integer> keys = GameKeyListener.getListener().getPendingKeys();
+		/*
 		int direction = -1;
 		if (keys.indexOf(KeyEvent.VK_RIGHT) != -1) {
 			direction = 0;
@@ -35,6 +36,21 @@ public class Player extends Entity {
 		}
 		if (direction != -1) {
 			this.setDirection(direction);
+			this.move();
+		}
+		*/
+		if (keys.indexOf(KeyEvent.VK_RIGHT) != -1) {
+			this.turn(5);
+		}
+		if (keys.indexOf(KeyEvent.VK_DOWN) != -1) {
+			this.velocity = -1;
+			this.move();
+		}
+		if (keys.indexOf(KeyEvent.VK_LEFT) != -1) {
+			this.turn(-5);
+		}
+		if (keys.indexOf(KeyEvent.VK_UP) != -1) {
+			this.velocity = 1;
 			this.move();
 		}
 	}

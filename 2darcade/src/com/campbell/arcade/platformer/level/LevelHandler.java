@@ -18,7 +18,6 @@ public class LevelHandler {
 			if (f.isDirectory()) {
 				for (File lf : f.listFiles()) {
 					levels.add(new Level(lf));
-					System.out.println("level found: " + lf.getName());
 				}
 			}
 		} catch (URISyntaxException e) {}

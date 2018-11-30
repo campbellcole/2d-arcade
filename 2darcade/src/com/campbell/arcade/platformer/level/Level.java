@@ -32,7 +32,7 @@ public class Level {
 			while ((line = br.readLine()) != null) {
 				data[ix++] = LevelReader.interpret(line);
 			}
-			ld = LevelReader.interpret(data);
+			ld = LevelReader.interpret(data, this);
 			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();

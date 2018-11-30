@@ -3,12 +3,13 @@ package com.campbell.arcade.platformer.common.entity;
 import java.util.ArrayList;
 
 import com.campbell.arcade.common.GameKeyListener;
+import com.campbell.arcade.platformer.level.Level;
 import com.sun.glass.events.KeyEvent;
 
 public class Player extends Entity {
 	
-	public Player(int x, int y) {
-		super("player", x, y);
+	public Player(int x, int y, Level lvl) {
+		super("player", x, y, lvl);
 		this.register();
 	}
 	

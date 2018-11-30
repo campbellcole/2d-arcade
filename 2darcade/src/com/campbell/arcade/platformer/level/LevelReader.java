@@ -83,14 +83,14 @@ public class LevelReader {
 		return new int[] { Integer.parseInt(lenS), ptr};
 	}
 	
-	public static LevelData interpret(byte[][][] data) throws Exception {
+	public static LevelData interpret(byte[][][] data, Level instance) throws Exception {
 		LevelData dat = new LevelData();
 		List<Entity> ents = dat.getEntities();
 		List<Tile> tiles = dat.getTiles();
 		for (int x = 0; x < data.length; x++) {
 			for (int y = 0; y < data[x].length; y++) {
-				Drawable tile = newInstance((char)data[x][y][0], y, x);
-				Drawable ent = newInstance((char)data[x][y][1], y, x);
+				Drawable tile = newInstance((char)data[x][y][0], y, x, instance);
+				Drawable ent = newInstance((char)data[x][y][1], y, x, instance);
 				if (tile instanceof Tile) tiles.add((Tile)tile);
 				if (ent instanceof Entity) ents.add((Entity)ent);
 			}
@@ -100,13 +100,13 @@ public class LevelReader {
 		return dat;
 	}
 	
-	private static Drawable newInstance(char type, int y, int x) throws Exception {
+	private static Drawable newInstance(char type, int y, int x, Level lvl) throws Exception {
 		Class<? extends Drawable> c = Dictionary.d.get(type);
 		if (c == null) {
 			return null;
 		}
-		Constructor<?> ct = c.getConstructor(int.class, int.class);
-		return (Drawable) ct.newInstance(new Object[] { (y*16), (x*16) } );
+		Constructor<?> ct = c.getConstructor(int.class, int.class, Level.class);
+		return (Drawable) ct.newInstance(new Object[] { (y*16), (x*16), lvl } );
 	}
 	
 }

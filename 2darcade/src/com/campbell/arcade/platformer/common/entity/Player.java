@@ -1,10 +1,10 @@
 package com.campbell.arcade.platformer.common.entity;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import com.campbell.arcade.common.GameKeyListener;
 import com.campbell.arcade.platformer.level.Level;
-import com.sun.glass.events.KeyEvent;
 
 public class Player extends Entity {
 	

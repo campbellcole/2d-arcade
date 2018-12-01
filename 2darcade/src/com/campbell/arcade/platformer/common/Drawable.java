@@ -48,9 +48,9 @@ public class Drawable {
 	}
 	
 	public boolean isTouchingEdge(int x, int y) {
-		boolean x1 = x==0;
+		boolean x1 = x<=0;
 		boolean x2 = x>=PlatformerSettings.WIDTH-16;
-		boolean y1 = y==0;
+		boolean y1 = y<=0;
 		boolean y2 = y>=PlatformerSettings.HEIGHT-16;
 		return x1 || x2 || y1 || y2;
 	}

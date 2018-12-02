@@ -43,14 +43,14 @@ public class Player extends Entity {
 			this.turn(5);
 		}
 		if (keys.indexOf(KeyEvent.VK_DOWN) != -1) {
-			this.velocity = -1;
+			this.velocity = (keys.indexOf(KeyEvent.VK_SHIFT) != 1 ? -1 : -2);
 			this.move();
 		}
 		if (keys.indexOf(KeyEvent.VK_LEFT) != -1) {
 			this.turn(-5);
 		}
 		if (keys.indexOf(KeyEvent.VK_UP) != -1) {
-			this.velocity = 1;
+			this.velocity = (keys.indexOf(KeyEvent.VK_SHIFT) != 1 ? 1 : 2);
 			this.move();
 		}
 	}

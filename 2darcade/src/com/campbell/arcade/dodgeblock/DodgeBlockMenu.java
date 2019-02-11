@@ -33,19 +33,19 @@ public class DodgeBlockMenu implements Game {
 	
 	@Override
 	public void update() {
-		ArrayList<Integer> p = GameKeyListener.getListener().getPendingKeys();
+		ArrayList<Integer> p = GameKeyListener.getPendingKeys();
 		for (int i = 0; i < p.size(); i++) {
 			if (!choseDif) {
 				if (p.get(i) == KeyEvent.VK_DOWN) {
 					if ((int)dh.get("sel") < 2) {
 						dh.set("sel", (int)dh.get("sel")+1);
-						GameKeyListener.getListener().reset();
+						GameKeyListener.reset();
 					}
 				}
 				if (p.get(i) == KeyEvent.VK_UP) {
 					if ((int)dh.get("sel") > 0) {
 						dh.set("sel", (int)dh.get("sel")-1);
-						GameKeyListener.getListener().reset();
+						GameKeyListener.reset();
 					}
 				}
 			}

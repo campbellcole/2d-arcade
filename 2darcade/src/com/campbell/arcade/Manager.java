@@ -28,27 +28,27 @@ import com.campbell.arcade.platformer.Platformer;
 import com.campbell.arcade.snake.Snake;
 
 public class Manager extends JFrame implements Runnable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public static List<Game> games = new ArrayList<Game>();
 	public static Manager instance;
-	
+
 	Thread thread;
-	
+
 	Game currentGame;
-	
+
 	BufferedImage img;
 	Graphics2D g;
 	Graphics gr;
-	
+
 	boolean running = false;
-	
+
 	public Manager() {
 		thread = new Thread(this);
 		instance = this;
 	}
-	
+
 	public synchronized void begin() {
 		initialize();
 		registerGames();
@@ -56,7 +56,7 @@ public class Manager extends JFrame implements Runnable {
 		running = true;
 		thread.start();
 	}
-	
+
 	public synchronized void end() {
 		running = false;
 		try {
@@ -65,7 +65,7 @@ public class Manager extends JFrame implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Graphics2D modifySize(int x, int y) {
 		Settings.WIDTH = x;
 		Settings.HEIGHT = y;
@@ -76,7 +76,7 @@ public class Manager extends JFrame implements Runnable {
 		setLocationRelativeTo(null);
 		return g;
 	}
-	
+
 	private void initialize() {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		try {
@@ -96,10 +96,10 @@ public class Manager extends JFrame implements Runnable {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		
+
 		// remove later
 		JOptionPane.showMessageDialog(this, "This program is a work in progress. There will be bugs.");
-		
+
 		setSize(Settings.WIDTH, Settings.HEIGHT);
 		setIconImage(Settings.getIcon());
 		setResizable(false);
@@ -112,16 +112,16 @@ public class Manager extends JFrame implements Runnable {
 		Settings.setInsets(getInsets());
 		setSize(Settings.POSTWIDTH, Settings.POSTHEIGHT);
 	}
-	
+
 	private void registerGames() {
 		games.add(new Instructions(null));
 		games.add(new DodgeBlockMenu(null));
 		games.add(new Snake(null));
 		games.add(new Platformer(null));
 	}
-	
+
 	boolean justSwitched = true;
-	
+
 	public void setGame(Game g) {
 		try {
 			Class<?> c = Class.forName(g.getClass().getName());
@@ -131,12 +131,12 @@ public class Manager extends JFrame implements Runnable {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		GameKeyListener.getListener().reset();
+		GameKeyListener.reset();
 		currentGame = g;
 		currentGame.resize();
 		currentGame.initialize();
 	}
-	
+
 	@Override
 	public void run() {
 		while (running) {
@@ -145,21 +145,22 @@ public class Manager extends JFrame implements Runnable {
 			currentGame.getRenderer().draw();
 			gr.drawImage(img, Settings.INSET_LEFT, Settings.INSET_TOP, this);
 			time = (1000 / 60) - (System.currentTimeMillis() - time);
-			ArrayList<Integer> p = GameKeyListener.getListener().getPendingKeys();
+			ArrayList<Integer> p = GameKeyListener.getPendingKeys();
 			if (p.indexOf(KeyEvent.VK_ESCAPE) != -1) {
 				if (currentGame instanceof IntroScene) {
 					System.exit(0);
 				}
 				p.remove(p.indexOf(KeyEvent.VK_ESCAPE));
-				GameKeyListener.getListener().setPendingKeys(p);
+				GameKeyListener.setPendingKeys(p);
 				setGame(new IntroScene(g));
 			}
 			if (time > 0) {
 				try {
 					Thread.sleep(time);
-				} catch (Exception e) {}
+				} catch (Exception e) {
+				}
 			}
 		}
 	}
-	
+
 }

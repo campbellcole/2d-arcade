@@ -14,45 +14,25 @@ public class Player extends Entity {
 	}
 	
 	public void tick() {
-		ArrayList<Integer> keys = GameKeyListener.getListener().getPendingKeys();
-		/*
-		int direction = -1;
+		ArrayList<Integer> keys = GameKeyListener.getPendingKeys();
+		int degrees = NULL;
 		if (keys.indexOf(KeyEvent.VK_RIGHT) != -1) {
-			direction = 0;
+			degrees = RIGHT;
 		}
 		if (keys.indexOf(KeyEvent.VK_DOWN) != -1) {
-			direction = 90;
+			degrees = DOWN;
 		}
 		if (keys.indexOf(KeyEvent.VK_LEFT) != -1) {
-			direction = 180;
+			degrees = LEFT;
 		}
 		if (keys.indexOf(KeyEvent.VK_UP) != -1) {
-			direction = 270;
+			degrees = UP;
 		}
-		if (keys.indexOf(KeyEvent.VK_SHIFT) != -1) {
-			this.velocity = 2;
-		} else {
-			this.velocity = 1;
-		}
-		if (direction != -1) {
-			this.setDirection(direction);
+		if (degrees != NULL) {
+			this.setDirection(degrees);
 			this.move();
 		}
-		*/
-		if (keys.indexOf(KeyEvent.VK_RIGHT) != -1) {
-			this.turn(5);
-		}
-		if (keys.indexOf(KeyEvent.VK_DOWN) != -1) {
-			this.velocity = (keys.indexOf(KeyEvent.VK_SHIFT) != 1 ? -1 : -2);
-			this.move();
-		}
-		if (keys.indexOf(KeyEvent.VK_LEFT) != -1) {
-			this.turn(-5);
-		}
-		if (keys.indexOf(KeyEvent.VK_UP) != -1) {
-			this.velocity = (keys.indexOf(KeyEvent.VK_SHIFT) != 1 ? 1 : 2);
-			this.move();
-		}
+		super.tick();
 	}
 
 }

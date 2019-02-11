@@ -17,7 +17,7 @@ public class GameKeyListener implements KeyListener {
 		return gkl;
 	}
 	
-	private ArrayList<Integer> pending = new ArrayList<Integer>();
+	private static ArrayList<Integer> pending = new ArrayList<Integer>();
 	
 	@Override
 	public void keyTyped(KeyEvent e) {}
@@ -32,15 +32,15 @@ public class GameKeyListener implements KeyListener {
 		pending.removeAll(Collections.singleton(e.getKeyCode()));
 	}
 
-	public ArrayList<Integer> getPendingKeys() {
+	public static ArrayList<Integer> getPendingKeys() {
 		return pending;
 	}
 	
-	public void setPendingKeys(ArrayList<Integer> p) {
+	public static void setPendingKeys(ArrayList<Integer> p) {
 		pending = p;
 	}
 	
-	public void reset() {
+	public static void reset() {
 		pending = new ArrayList<Integer>();
 	}
 

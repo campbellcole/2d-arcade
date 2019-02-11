@@ -15,24 +15,24 @@ import com.campbell.arcade.common.Renderer;
 import com.campbell.arcade.common.Settings;
 
 public class Snake implements Game {
-	
+
 	Graphics2D g;
 	SnakeRenderer r;
-	
+
 	public Snake(Graphics2D g) {
 		this.g = g;
 		this.r = new SnakeRenderer(g, this);
 	}
-	
+
 	final int BLOCKSIZE = 25;
-	
+
 	Random rn;
 	BlockType[][] grid;
-	
+
 	static enum BlockType {
 		EMPTY, FOOD, BODY, HEAD;
 	}
-	
+
 	@Override
 	public void initialize() {
 		rn = new Random();
@@ -40,7 +40,7 @@ public class Snake implements Game {
 	}
 
 	int headX = 0, headY = 0;
-	
+
 	private void setupGrid() {
 		int gridX = Settings.WIDTH / BLOCKSIZE;
 		int gridY = Settings.HEIGHT / BLOCKSIZE;
@@ -50,26 +50,26 @@ public class Snake implements Game {
 				grid[x][y] = BlockType.EMPTY;
 			}
 		}
-		headX = gridX/2;
-		headY = gridY/2;
+		headX = gridX / 2;
+		headY = gridY / 2;
 		grid[headX][headY] = BlockType.HEAD;
 		Integer[] e = new Integer[2];
 		e[0] = headX;
-		e[1] = headY+1;
+		e[1] = headY + 1;
 		segments.add(e);
 		grid[rn.nextInt(gridX)][rn.nextInt(gridY)] = BlockType.FOOD;
 	}
-	
+
 	boolean pendingUp = false, pendingDown = false, pendingLeft = false, pendingRight = false;
-	
+
 	int wait = 7;
 	int waitTimer = 0;
-	
+
 	int length = 1;
 	int direction = 0; // 0 - up, 1 - right, 2 - down, 3 - left
-	
+
 	List<Integer[]> segments = new ArrayList<Integer[]>(); // excludes head
-	
+
 	@Override
 	public void update() {
 		checkKeys();
@@ -79,19 +79,23 @@ public class Snake implements Game {
 			int nextX = headX, nextY = headY;
 			if (pendingUp) {
 				resetKeys();
-				if (direction!=2) direction = 0;
+				if (direction != 2)
+					direction = 0;
 			}
 			if (pendingDown) {
 				resetKeys();
-				if (direction!=0) direction = 2;
+				if (direction != 0)
+					direction = 2;
 			}
 			if (pendingLeft) {
 				resetKeys();
-				if (direction!=1) direction = 3;
+				if (direction != 1)
+					direction = 3;
 			}
 			if (pendingRight) {
 				resetKeys();
-				if (direction!=3) direction = 1;
+				if (direction != 3)
+					direction = 1;
 			}
 			switch (direction) {
 			case 0:
@@ -127,9 +131,10 @@ public class Snake implements Game {
 					segments.set(i, storeT);
 				}
 				grid[storeT[0]][storeT[1]] = BlockType.EMPTY;
-				if (ate) eat(storeT[0], storeT[1]);
+				if (ate)
+					eat(storeT[0], storeT[1]);
 			}
-		}	
+		}
 	}
 
 	private void eat(int x, int y) {
@@ -140,63 +145,51 @@ public class Snake implements Game {
 		segments.add(coords);
 		int fX = rn.nextInt(grid.length);
 		int fY = rn.nextInt(grid[0].length);
-		while (grid[fX][fY]==BlockType.BODY || grid[fX][fY]==BlockType.HEAD) {
+		while (grid[fX][fY] == BlockType.BODY || grid[fX][fY] == BlockType.HEAD) {
 			fX = rn.nextInt(grid.length);
 			fY = rn.nextInt(grid[0].length);
 		}
 		grid[fX][fY] = BlockType.FOOD;
 	}
-	
+
 	private void hit() {
-		JOptionPane.showMessageDialog(Manager.instance, "You lost! Your score was: " + length, "Game over!", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(Manager.instance, "You lost! Your score was: " + length, "Game over!",
+				JOptionPane.PLAIN_MESSAGE);
 		Manager.instance.setGame(new Snake(null));
 	}
-	
+
 	private void resetKeys() {
 		pendingUp = false;
 		pendingDown = false;
 		pendingLeft = false;
 		pendingRight = false;
 	}
-	
+
 	private void checkKeys() {
-		ArrayList<Integer> p = GameKeyListener.getListener().getPendingKeys();
-		boolean didFind = true;
-		while (didFind) {
-			didFind = false;
-			int i;
-			for (i = 0; i < p.size(); i++) {
-				if (p.get(i) == KeyEvent.VK_W || p.get(i) == KeyEvent.VK_UP) {
-					pendingUp = true;
-					didFind = true;
-					break;
-				}
-				if (p.get(i) == KeyEvent.VK_S || p.get(i) == KeyEvent.VK_DOWN) {
-					pendingDown = true;
-					didFind = true;
-					break;
-				}
-				if (p.get(i) == KeyEvent.VK_A || p.get(i) == KeyEvent.VK_LEFT) {
-					pendingLeft = true;
-					didFind = true;
-					break;
-				}
-				if (p.get(i) == KeyEvent.VK_D || p.get(i) == KeyEvent.VK_RIGHT) {
-					pendingRight = true;
-					didFind = true;
-					break;
-				}
+		ArrayList<Integer> p = GameKeyListener.getPendingKeys();
+		for (int i = 0; i < p.size(); i++) {
+			if (p.get(i) == KeyEvent.VK_W || p.get(i) == KeyEvent.VK_UP) {
+				pendingUp = true;
+				break;
 			}
-			if (didFind) {
-				p.remove(i);
-				GameKeyListener.getListener().setPendingKeys(p);
+			if (p.get(i) == KeyEvent.VK_S || p.get(i) == KeyEvent.VK_DOWN) {
+				pendingDown = true;
+				break;
+			}
+			if (p.get(i) == KeyEvent.VK_A || p.get(i) == KeyEvent.VK_LEFT) {
+				pendingLeft = true;
+				break;
+			}
+			if (p.get(i) == KeyEvent.VK_D || p.get(i) == KeyEvent.VK_RIGHT) {
+				pendingRight = true;
+				break;
 			}
 		}
 	}
-	
+
 	@Override
 	public void resize() {
-		g = Manager.instance.modifySize(30*BLOCKSIZE, 25*BLOCKSIZE);
+		g = Manager.instance.modifySize(30 * BLOCKSIZE, 25 * BLOCKSIZE);
 		r = new SnakeRenderer(g, this);
 	}
 

@@ -12,16 +12,16 @@ import com.campbell.arcade.common.Renderer;
 import com.campbell.arcade.common.Settings;
 
 public class IntroScene implements Game {
-	
+
 	IntroRenderer r;
 	Graphics2D g;
 	DataHandler dh = new DataHandler();
-	
+
 	public IntroScene(Graphics2D g) {
 		this.g = g;
 		this.r = new IntroRenderer(g, this);
 	}
-	
+
 	@Override
 	public void initialize() {
 		dh.set("sel", 0);
@@ -29,22 +29,22 @@ public class IntroScene implements Game {
 
 	@Override
 	public void update() {
-		ArrayList<Integer> p = GameKeyListener.getListener().getPendingKeys();
+		ArrayList<Integer> p = GameKeyListener.getPendingKeys();
 		for (int i = 0; i < p.size(); i++) {
 			if (p.get(i) == KeyEvent.VK_DOWN) {
-				if ((int)dh.get("sel") < Manager.games.size()-1) {
-					dh.set("sel", (int)dh.get("sel")+1);
-					GameKeyListener.getListener().reset();
+				if ((int) dh.get("sel") < Manager.games.size() - 1) {
+					dh.set("sel", (int) dh.get("sel") + 1);
+					GameKeyListener.reset();
 				}
 			}
 			if (p.get(i) == KeyEvent.VK_UP) {
-				if ((int)dh.get("sel") > 0) {
-					dh.set("sel", (int)dh.get("sel")-1);
-					GameKeyListener.getListener().reset();
+				if ((int) dh.get("sel") > 0) {
+					dh.set("sel", (int) dh.get("sel") - 1);
+					GameKeyListener.reset();
 				}
 			}
 			if (p.get(i) == KeyEvent.VK_ENTER) {
-				Manager.instance.setGame(Manager.games.get((int)dh.get("sel")));
+				Manager.instance.setGame(Manager.games.get((int) dh.get("sel")));
 			}
 		}
 	}
@@ -53,7 +53,7 @@ public class IntroScene implements Game {
 	public Renderer getRenderer() {
 		return r;
 	}
-	
+
 	@Override
 	public String getName() {
 		return "INTROSCENE";
@@ -64,7 +64,7 @@ public class IntroScene implements Game {
 		g = Manager.instance.modifySize(Settings.DEFAULT_WIDTH, Settings.DEFAULT_HEIGHT);
 		r = new IntroRenderer(g, this);
 	}
-	
+
 	@Override
 	public String getDescription() {
 		return "you should not see this";

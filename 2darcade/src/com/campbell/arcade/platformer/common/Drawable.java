@@ -39,11 +39,13 @@ public class Drawable {
 		return name;
 	}
 	
+	final int HITBOX = 16;
+	
 	public boolean isOverlapping(int x1, int y1, int x2, int y2) {
-		boolean x1b = x1 < x2 + 16;
-		boolean x2b = x1 + 16 > x2;
-		boolean y1b = y1 < y2 + 16;
-		boolean y2b = y1 + 16 > y2;
+		boolean x1b = x1 <= x2 + HITBOX;
+		boolean x2b = x1 + HITBOX >= x2;
+		boolean y1b = y1 <= y2 + HITBOX;
+		boolean y2b = y1 + HITBOX >= y2;
 		return x1b && x2b && y1b && y2b;
 	}
 	

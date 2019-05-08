@@ -20,19 +20,30 @@ public class Player extends Entity {
 			degrees = RIGHT;
 		}
 		if (keys.indexOf(KeyEvent.VK_DOWN) != -1) {
-			degrees = DOWN;
+			crouch();
 		}
 		if (keys.indexOf(KeyEvent.VK_LEFT) != -1) {
 			degrees = LEFT;
 		}
 		if (keys.indexOf(KeyEvent.VK_UP) != -1) {
-			degrees = UP;
+			jump();
 		}
 		if (degrees != NULL) {
 			this.setDirection(degrees);
 			this.move();
 		}
 		super.tick();
+	}
+	
+	boolean crouched = false;
+	
+	public void crouch() {
+		crouched = !crouched;
+		if (crouched) {
+			
+		} else {
+			
+		}
 	}
 
 }

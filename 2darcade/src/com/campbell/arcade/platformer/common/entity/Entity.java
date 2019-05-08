@@ -12,7 +12,7 @@ import com.campbell.arcade.platformer.level.Level;
 
 public class Entity extends Drawable {
 	
-	final int RIGHT = 0, DOWN = 90, LEFT = 180, UP = 270, NULL = -1;
+	public static final int RIGHT = 0, DOWN = 90, LEFT = 180, UP = 270, NULL = -1;
 	final int VALID = -2, EDGE = -1;
 	
 	final int JUMP_HEIGHT = 5, MAX_FALL_SPEED = -5;
@@ -42,7 +42,7 @@ public class Entity extends Drawable {
 		move(2);
 	}
 	
-	private void move(int steps) {
+	public void move(int steps) {
 		checkTouching();
 		int newX = (int) Math.round(x + Math.cos(direction) * steps * velocity);
 		int newY = (int) Math.round(y + Math.sin(direction) * steps * velocity);
@@ -72,6 +72,10 @@ public class Entity extends Drawable {
 		direction = degrees * d_r;
 	}
 	
+	public double getDirection() {
+		return direction;
+	}
+	
 	private void checkTouching() {
 		touching.clear();
 		for (Tile t : lvl.ld.getTiles()) {
@@ -99,8 +103,14 @@ public class Entity extends Drawable {
 					jumped = false;
 				}
 			} else {
-				PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.RESTART, "You died.");
-				Platformer.eventQueue.add(ev);
+				if (this instanceof Player) {
+					PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.RESTART, "You died.");
+					Platformer.eventQueue.add(ev);
+				} else {
+					PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.REMOVE, ""+this.hashCode());
+					Platformer.eventQueue.add(ev);
+				}
+				// goodbye :)
 			}
 		}
 	}

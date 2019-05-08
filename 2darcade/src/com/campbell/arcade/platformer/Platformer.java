@@ -53,6 +53,16 @@ public class Platformer implements Game {
 				r.displayMessage(ev.data);
 				currentLevel.load();
 				break;
+			case REMOVE:
+				int hash = Integer.parseInt(ev.data);
+				List<Entity> ents = currentLevel.ld.getEntities();
+				for (int i = 0; i < ents.size(); i++) {
+					if (ents.get(i).hashCode() == hash) {
+						ents.remove(i);
+					}
+				}
+				currentLevel.ld.setEntities(ents);
+				break;
 			default:
 				break;
 			}

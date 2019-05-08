@@ -33,6 +33,10 @@ public class LevelData {
 		this.ents = ents;
 	}
 	
+	public void removeEntity(Entity e) {
+		ents.remove(e);
+	}
+	
 	public List<Tile> tilesOfType(Class<? extends Entity> type) {
 		List<Tile> tileL = new ArrayList<Tile>();
 		for (Tile tile : tiles) {

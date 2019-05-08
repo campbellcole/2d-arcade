@@ -205,7 +205,7 @@ public class Snake implements Game {
 
 	@Override
 	public String getDescription() {
-		return "The classical snake game. ------ WIP BARELY WORKS ------";
+		return "The classical snake game.";
 	}
 
 }

@@ -88,7 +88,7 @@ public class Platformer implements Game {
 
 	@Override
 	public String getDescription() {
-		return "wip platformer";
+		return "red plumber ripoff";
 	}
 	
 }

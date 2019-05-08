@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -96,9 +95,6 @@ public class Manager extends JFrame implements Runnable {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-
-		// remove later
-		JOptionPane.showMessageDialog(this, "This program is a work in progress. There will be bugs.");
 
 		setSize(Settings.WIDTH, Settings.HEIGHT);
 		setIconImage(Settings.getIcon());

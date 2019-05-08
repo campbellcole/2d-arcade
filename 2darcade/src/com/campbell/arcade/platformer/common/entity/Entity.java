@@ -3,7 +3,10 @@ package com.campbell.arcade.platformer.common.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.campbell.arcade.platformer.Platformer;
 import com.campbell.arcade.platformer.common.Drawable;
+import com.campbell.arcade.platformer.common.PlatformerEvent;
+import com.campbell.arcade.platformer.common.PlatformerEvent.PlatformerEventType;
 import com.campbell.arcade.platformer.common.tile.Tile;
 import com.campbell.arcade.platformer.level.Level;
 
@@ -17,8 +20,9 @@ public class Entity extends Drawable {
 	
 	private double direction;
 	private double velocity;
-	private double grav_vel;
-	private boolean jumped;
+	
+	protected double grav_vel;
+	protected boolean jumped;
 	
 	List<Tile> touching = new ArrayList<Tile>();
 	
@@ -34,13 +38,6 @@ public class Entity extends Drawable {
 		jumped = false;
 	}
 	
-	public void jump() {
-		if (!jumped) {
-			grav_vel = JUMP_HEIGHT;
-			jumped = true;
-		}
-	}
-	
 	public void move() {
 		move(2);
 	}
@@ -52,6 +49,13 @@ public class Entity extends Drawable {
 		if (validate(newX, newY) != VALID) return;
 		x = newX;
 		y = newY;
+	}
+	
+	public void jump() {
+		if (!jumped) {
+			grav_vel = JUMP_HEIGHT;
+			jumped = true;
+		}
 	}
 	
 	public int validate(int x, int y) {
@@ -82,7 +86,7 @@ public class Entity extends Drawable {
 		}
 	}
 	
-	private void updatePosition() {
+	protected void updatePosition() {
 		double ymod = -(grav_vel -= grav_vel >= MAX_FALL_SPEED ? GRAVITY : 0);
 		int res = validate(x, (int)(y+ymod));
 		if (res == VALID) {
@@ -94,12 +98,14 @@ public class Entity extends Drawable {
 					grav_vel = 0;
 					jumped = false;
 				}
+			} else {
+				PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.RESTART, "You died.");
+				Platformer.eventQueue.add(ev);
 			}
 		}
 	}
 	
 	public void tick() {
-		if (jumped) move(0);
 		checkTouching();
 		updatePosition();
 	}

@@ -1,16 +1,21 @@
 package com.campbell.arcade.platformer;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.campbell.arcade.Manager;
 import com.campbell.arcade.common.Game;
 import com.campbell.arcade.common.Renderer;
+import com.campbell.arcade.platformer.common.PlatformerEvent;
 import com.campbell.arcade.platformer.common.entity.Entity;
 import com.campbell.arcade.platformer.level.Dictionary;
 import com.campbell.arcade.platformer.level.Level;
 import com.campbell.arcade.platformer.level.LevelHandler;
 
 public class Platformer implements Game {
+	
+	public static List<PlatformerEvent> eventQueue = new ArrayList<PlatformerEvent>();
 	
 	Graphics2D g;
 	PlatformerRenderer r;
@@ -38,6 +43,20 @@ public class Platformer implements Game {
 	public void update() {
 		for (Entity ent : currentLevel.ld.getEntities()) {
 			ent.tick();
+		}
+		while (!Platformer.eventQueue.isEmpty()) {
+			PlatformerEvent ev = Platformer.eventQueue.get(0);
+			switch (ev.type) {
+			case NEXTLEVEL:
+				currentLevel = LevelHandler.getLevels().get(Integer.parseInt(ev.data));
+			case RESTART:
+				r.displayMessage(ev.data);
+				currentLevel.load();
+				break;
+			default:
+				break;
+			}
+			Platformer.eventQueue.remove(0);
 		}
 	}
 

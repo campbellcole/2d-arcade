@@ -7,6 +7,7 @@ import com.campbell.arcade.common.GameKeyListener;
 import com.campbell.arcade.platformer.Platformer;
 import com.campbell.arcade.platformer.common.PlatformerEvent;
 import com.campbell.arcade.platformer.common.PlatformerEvent.PlatformerEventType;
+import com.campbell.arcade.platformer.level.Dictionary;
 import com.campbell.arcade.platformer.level.Level;
 
 public class Player extends Entity {
@@ -40,7 +41,8 @@ public class Player extends Entity {
 	
 	@Override
 	public void handleCollide(Entity e) {
-		PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "Killed by a monster.");
+		String entName = Dictionary.n.get(e.getClass());
+		PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "Killed by " + entName);
 		Platformer.eventQueue.add(ev);
 	}
 

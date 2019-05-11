@@ -51,8 +51,13 @@ public class Entity extends Drawable {
 		y = newY;
 	}
 	
+	public void moveTowards(Entity e, int steps) {
+		direction = Math.atan2(e.y - y, e.x - x);
+		move(steps);
+	}
+	
 	public void jump() {
-		if (!jumped) {
+		if (!jumped && grav_vel == 0) {
 			grav_vel = JUMP_HEIGHT;
 			jumped = true;
 		}
@@ -90,6 +95,14 @@ public class Entity extends Drawable {
 		}
 	}
 	
+	private void checkEnts() {
+		for (Entity e : lvl.ld.getEntities()) {
+			if (isOverlapping(x, y, e.x, e.y) && e != this) handleCollide(e);
+		}
+	}
+	
+	public void handleCollide(Entity e) {}
+	
 	protected void updatePosition() {
 		double ymod = -(grav_vel -= grav_vel >= MAX_FALL_SPEED ? GRAVITY : 0);
 		int res = validate(x, (int)(y+ymod));
@@ -104,7 +117,7 @@ public class Entity extends Drawable {
 				}
 			} else {
 				if (this instanceof Player) {
-					PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.RESTART, "You died.");
+					PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "You died.");
 					Platformer.eventQueue.add(ev);
 				} else {
 					PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.REMOVE, ""+this.hashCode());
@@ -117,6 +130,7 @@ public class Entity extends Drawable {
 	
 	public void tick() {
 		checkTouching();
+		checkEnts();
 		updatePosition();
 	}
 	

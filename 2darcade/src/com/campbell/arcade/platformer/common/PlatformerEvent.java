@@ -3,7 +3,7 @@ package com.campbell.arcade.platformer.common;
 public class PlatformerEvent {
 	
 	public static enum PlatformerEventType {
-		RESTART, NEXTLEVEL, REMOVE;
+		RESTART, DEATH, NEXTLEVEL, REMOVE;
 	}
 	
 	public PlatformerEventType type;

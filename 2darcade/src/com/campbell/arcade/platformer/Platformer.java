@@ -50,6 +50,9 @@ public class Platformer implements Game {
 			case NEXTLEVEL:
 				currentLevel = LevelHandler.getLevels().get(Integer.parseInt(ev.data));
 			case RESTART:
+				currentLevel.load();
+				break;
+			case DEATH:
 				r.displayMessage(ev.data);
 				currentLevel.load();
 				break;

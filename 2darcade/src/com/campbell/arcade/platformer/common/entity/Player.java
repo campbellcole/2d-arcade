@@ -4,6 +4,9 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import com.campbell.arcade.common.GameKeyListener;
+import com.campbell.arcade.platformer.Platformer;
+import com.campbell.arcade.platformer.common.PlatformerEvent;
+import com.campbell.arcade.platformer.common.PlatformerEvent.PlatformerEventType;
 import com.campbell.arcade.platformer.level.Level;
 
 public class Player extends Entity {
@@ -20,7 +23,7 @@ public class Player extends Entity {
 			degrees = RIGHT;
 		}
 		if (keys.indexOf(KeyEvent.VK_DOWN) != -1) {
-			crouch();
+			//crouch();
 		}
 		if (keys.indexOf(KeyEvent.VK_LEFT) != -1) {
 			degrees = LEFT;
@@ -35,15 +38,10 @@ public class Player extends Entity {
 		super.tick();
 	}
 	
-	boolean crouched = false;
-	
-	public void crouch() {
-		crouched = !crouched;
-		if (crouched) {
-			
-		} else {
-			
-		}
+	@Override
+	public void handleCollide(Entity e) {
+		PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "Killed by a monster.");
+		Platformer.eventQueue.add(ev);
 	}
 
 }

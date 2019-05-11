@@ -2,6 +2,7 @@ package com.campbell.arcade.platformer.common.entity.meat;
 
 import com.campbell.arcade.platformer.common.entity.Entity;
 import com.campbell.arcade.platformer.common.entity.EntityAI;
+import com.campbell.arcade.platformer.level.LevelHelper;
 
 public class EntityMeatAI extends EntityAI {
 	
@@ -16,18 +17,7 @@ public class EntityMeatAI extends EntityAI {
 	
 	@Override
 	public void tick() {
-		counter++;
-		if (counter > 100) {
-			if (instance.getDirection() == Entity.RIGHT) {
-				instance.setDirection(Entity.LEFT);
-				counter = 0;
-			} else {
-				instance.setDirection(Entity.RIGHT);
-				counter = 0;
-			}
-		}
-		instance.move(1);
-		instance.jump();
+		instance.moveTowards(LevelHelper.getPlayer(instance.lvl), 2);
 	}
 
 }

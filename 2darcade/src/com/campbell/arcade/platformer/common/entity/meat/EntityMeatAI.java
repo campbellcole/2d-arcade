@@ -13,8 +13,6 @@ public class EntityMeatAI extends EntityAI {
 		instance.setDirection(Entity.LEFT);
 	}
 	
-	int counter = 0;
-	
 	@Override
 	public void tick() {
 		instance.moveTowards(LevelHelper.getPlayer(instance.lvl), 2);

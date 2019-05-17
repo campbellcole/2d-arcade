@@ -7,6 +7,7 @@ import java.util.List;
 import com.campbell.arcade.Manager;
 import com.campbell.arcade.common.Game;
 import com.campbell.arcade.common.Renderer;
+import com.campbell.arcade.introscene.IntroScene;
 import com.campbell.arcade.platformer.common.PlatformerEvent;
 import com.campbell.arcade.platformer.common.entity.Entity;
 import com.campbell.arcade.platformer.level.Dictionary;
@@ -49,7 +50,13 @@ public class Platformer implements Game {
 			PlatformerEvent ev = Platformer.eventQueue.get(0);
 			switch (ev.type) {
 			case NEXTLEVEL:
-				currentLevel = LevelHandler.getLevels().get(Integer.parseInt(ev.data));
+				try {
+					currentLevel = LevelHandler.getLevels().get(Integer.parseInt(ev.data));
+					loadLevel(currentLevel);
+				} catch (IndexOutOfBoundsException ex) {
+					Manager.instance.setGame(new IntroScene(null));
+				}
+				break;
 			case RESTART:
 				loadLevel(currentLevel);
 				break;

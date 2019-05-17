@@ -1,5 +1,6 @@
 package com.campbell.arcade.platformer;
 
+import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -91,7 +92,7 @@ public class PlatformerRenderer implements Renderer {
 			FontMetrics m = g.getFontMetrics();
 			int cX = (Settings.POSTWIDTH - m.stringWidth(message))/2;
 			int cY = ((Settings.POSTHEIGHT - m.getHeight())/2);
-			g.setColor(Settings.TXT);
+			g.setColor(Color.black);
 			g.drawString(message, cX, cY);
 			if (msgTimer != -2) msgTimer--;
 		}

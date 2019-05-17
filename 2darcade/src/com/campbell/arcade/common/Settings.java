@@ -31,7 +31,7 @@ public class Settings {
 		return Font.decode(FONT + "-" + size);
 	}
 	
-	public static Color BG = Color.LIGHT_GRAY;
+	public static Color BG = Color.black;
 	public static Color TXT = Color.decode("#d6d6d6");
 	public static Color SEL = Color.decode("#9d34c1");
 	

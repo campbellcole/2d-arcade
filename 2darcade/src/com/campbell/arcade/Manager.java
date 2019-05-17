@@ -51,8 +51,11 @@ public class Manager extends JFrame implements Runnable {
 	}
 
 	public synchronized void begin() {
+		System.out.println("[Manager] initializing.");
 		initialize();
+		System.out.println("[Manager] registering games...");
 		registerGames();
+		System.out.println("[Manager] loading intro scene...");
 		setGame(new IntroScene(g));
 		running = true;
 		thread.start();
@@ -79,6 +82,7 @@ public class Manager extends JFrame implements Runnable {
 	}
 
 	private void initialize() {
+		System.out.println("[Manager] registering font...");
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		try {
 			Font fn = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/res/ka1.ttf"));
@@ -87,10 +91,16 @@ public class Manager extends JFrame implements Runnable {
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println("[Manager] initializing key listener...");
 		GameKeyListener.initialize();
 		addKeyListener(GameKeyListener.getListener());
+		
+		System.out.println("[Manager] creating image buffer...");
 		img = new BufferedImage(Settings.WIDTH, Settings.HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) img.getGraphics();
+		
+		System.out.println("[Manager] setting up window...");
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -116,6 +126,9 @@ public class Manager extends JFrame implements Runnable {
 		games.add(new DodgeBlockMenu(null));
 		games.add(new Snake(null));
 		games.add(new Platformer(null));
+		for (Game g : games) {
+			System.out.println("[Manager] registered " + g.getName());
+		}
 	}
 
 	boolean justSwitched = true;
@@ -139,10 +152,6 @@ public class Manager extends JFrame implements Runnable {
 	public void run() {
 		while (running) {
 			long time = System.currentTimeMillis();
-			currentGame.update();
-			currentGame.getRenderer().draw();
-			gr.drawImage(img, Settings.INSET_LEFT, Settings.INSET_TOP, this);
-			time = (1000 / 60) - (System.currentTimeMillis() - time);
 			ArrayList<Integer> p = GameKeyListener.getPendingKeys();
 			if (p.indexOf(KeyEvent.VK_ESCAPE) != -1) {
 				if (currentGame instanceof IntroScene) {
@@ -152,6 +161,10 @@ public class Manager extends JFrame implements Runnable {
 				GameKeyListener.setPendingKeys(p);
 				setGame(new IntroScene(g));
 			}
+			currentGame.update();
+			currentGame.getRenderer().draw();
+			gr.drawImage(img, Settings.INSET_LEFT, Settings.INSET_TOP, this);
+			time = (1000 / 60) - (System.currentTimeMillis() - time);
 			if (time > 0) {
 				try {
 					Thread.sleep(time);

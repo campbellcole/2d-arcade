@@ -47,7 +47,7 @@ public class Player extends Entity {
 			forceJump();
 		} else {
 			String entName = Dictionary.n.get(e.getClass());
-			PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "Killed by " + entName);
+			PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "Killed by " + entName + "!");
 			Platformer.eventQueue.add(ev);
 		}
 	}

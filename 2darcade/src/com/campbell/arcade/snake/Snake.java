@@ -35,7 +35,9 @@ public class Snake implements Game {
 
 	@Override
 	public void initialize() {
+		System.out.println("[Snake] initializing...");
 		rn = new Random();
+		System.out.println("[Snake] setting up grid...");
 		setupGrid();
 	}
 
@@ -45,6 +47,7 @@ public class Snake implements Game {
 		int gridX = Settings.WIDTH / BLOCKSIZE;
 		int gridY = Settings.HEIGHT / BLOCKSIZE;
 		grid = new BlockType[gridX][gridY];
+		System.out.println("[Snake] populating empty grid...");
 		for (int x = 0; x < grid.length; x++) {
 			for (int y = 0; y < grid[x].length; y++) {
 				grid[x][y] = BlockType.EMPTY;
@@ -58,6 +61,7 @@ public class Snake implements Game {
 		e[1] = headY + 1;
 		segments.add(e);
 		grid[rn.nextInt(gridX)][rn.nextInt(gridY)] = BlockType.FOOD;
+		System.out.println("[Snake] grid setup complete.");
 	}
 
 	boolean pendingUp = false, pendingDown = false, pendingLeft = false, pendingRight = false;
@@ -131,8 +135,10 @@ public class Snake implements Game {
 					segments.set(i, storeT);
 				}
 				grid[storeT[0]][storeT[1]] = BlockType.EMPTY;
-				if (ate)
+				if (ate) {
+					System.out.println("[Snake] head collided with food.");
 					eat(storeT[0], storeT[1]);
+				}
 			}
 		}
 	}
@@ -153,6 +159,7 @@ public class Snake implements Game {
 	}
 
 	private void hit() {
+		System.out.println("[Snake] head hit body or edge. restarting...");
 		JOptionPane.showMessageDialog(Manager.instance, "You lost! Your score was: " + length, "Game over!",
 				JOptionPane.PLAIN_MESSAGE);
 		Manager.instance.setGame(new Snake(null));

@@ -33,6 +33,7 @@ public class PlatformerRenderer implements Renderer {
 	}
 	
 	public void generateBackground() {
+		System.out.println("[PlatformerRenderer] generating background...");
 		try {
 			BufferedImage bg = new BufferedImage(PlatformerSettings.WIDTH, PlatformerSettings.HEIGHT, BufferedImage.TYPE_INT_RGB);
 			Graphics2D bgG = bg.createGraphics();
@@ -60,16 +61,19 @@ public class PlatformerRenderer implements Renderer {
 	}
 	
 	public void displayMessage(String message) {
+		System.out.println("[PlatformerRenderer] displaying message for 240 frames...");
 		this.message = message;
 		this.msgTimer = 240;
 	}
 	
 	public void displayMessageHard(String message) {
+		System.out.println("[PlatformerRenderer] displaying message hard until disabled...");
 		this.message = message;
 		this.msgTimer = -2;
 	}
 	
 	public void hideMessageHard() {
+		System.out.println("[PlatformerRenderer] disabling hard message...");
 		this.msgTimer = 0;
 	}
 	

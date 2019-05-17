@@ -25,6 +25,7 @@ public class IntroScene implements Game {
 	@Override
 	public void initialize() {
 		dh.set("sel", 0);
+		System.out.println("[IntroScene] initializing...");
 	}
 
 	@Override
@@ -45,6 +46,7 @@ public class IntroScene implements Game {
 			}
 			if (p.get(i) == KeyEvent.VK_ENTER) {
 				if (!Manager.games.get((int) dh.get("sel")).getName().equals("Instructions")) {
+					System.out.println("[IntroScene] game selected. loading...");
 					Manager.instance.setGame(Manager.games.get((int) dh.get("sel")));
 				}
 			}

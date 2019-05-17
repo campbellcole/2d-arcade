@@ -11,6 +11,7 @@ import com.campbell.arcade.platformer.common.tile.Tile;
 public class LevelReader {
 	
 	public static byte[][] interpret(String s) {
+		//System.out.println("[LevelReader] converting row to byte array...");
 		byte[][] i = new byte[PlatformerSettings.WIDTH/16][2];
 		int tLen = s.indexOf('&');
 		char[] tc = s.substring(0, tLen).toCharArray();
@@ -80,10 +81,11 @@ public class LevelReader {
 		while (arr[ptr] != ')') {
 			lenS += arr[ptr++];
 		}
-		return new int[] { Integer.parseInt(lenS), ptr};
+		return new int[] { Integer.parseInt(lenS), ptr };
 	}
 	
 	public static LevelData interpret(byte[][][] data, Level instance) throws Exception {
+		System.out.println("[LevelReader] interpreting level data...");
 		LevelData dat = new LevelData();
 		List<Entity> ents = dat.getEntities();
 		List<Tile> tiles = dat.getTiles();

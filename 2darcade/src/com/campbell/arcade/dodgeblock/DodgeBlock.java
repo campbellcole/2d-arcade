@@ -34,7 +34,9 @@ public class DodgeBlock implements Game {
 
 	@Override
 	public void initialize() {
+		System.out.println("[DodgeBlock] initializing...");
 		r = new Random();
+		System.out.println("[DodgeBlock] setting up grid...");
 		setupGrid();
 	}
 

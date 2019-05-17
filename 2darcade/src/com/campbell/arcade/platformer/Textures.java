@@ -17,6 +17,7 @@ public class Textures {
 	public static void register(Class<? extends Drawable> clazz, URL loc) {
 		try {
 			if (!textures.containsKey(clazz)) {
+				System.out.println("[Textures] registering texture for class \"" + clazz.getCanonicalName() + "\"...");
 				Image img = ImageIO.read(loc);
 				textures.put(clazz, img);
 			}
@@ -27,6 +28,7 @@ public class Textures {
 	
 	public static void register(Class<? extends Drawable> clazz, Image image) {
 		if (!textures.containsKey(clazz)) {
+			System.out.println("[Textures] registering texture for class \"" + clazz.getCanonicalName() + "\"...");
 			textures.put(clazz, image);
 		}
 	}

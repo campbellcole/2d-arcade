@@ -17,6 +17,8 @@ public class Dictionary {
 	
 	public static void initialize() {
 		
+		System.out.println("[Dictionary] initializing...");
+		
 		d.put('P', Player.class);
 		n.put(Player.class, "Player");
 		
@@ -28,6 +30,8 @@ public class Dictionary {
 		d.put('D', TileDirt.class);
 		
 		d.put((char)0x0, TileBlank.class);
+		
+		System.out.println("[Dictionary] done.");
 		
 	}
 	

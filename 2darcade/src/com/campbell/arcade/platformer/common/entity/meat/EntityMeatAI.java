@@ -15,7 +15,9 @@ public class EntityMeatAI extends EntityAI {
 	
 	@Override
 	public void tick() {
-		instance.moveTowards(LevelHelper.getPlayer(instance.lvl), 2);
+		try {
+			instance.moveTowards(LevelHelper.getPlayer(instance.lvl), 2);
+		} catch (IndexOutOfBoundsException ex) {}
 	}
 
 }

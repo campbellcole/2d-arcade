@@ -46,6 +46,7 @@ public class Settings {
 	}
 	
 	public static void setInsets(Insets i) {
+		System.out.println("[Settings] calculating insets...");
 		INSET_LEFT = i.left;
 		INSET_RIGHT = i.right;
 		INSET_TOP = i.top;
@@ -60,6 +61,7 @@ public class Settings {
 	}
 	
 	public static Image getIcon() {
+		System.out.println("[Settings] generating icon...");
 		BufferedImage b = new BufferedImage(15, 15, BufferedImage.TYPE_INT_RGB);
 		Graphics g = b.getGraphics();
 		g.setColor(Color.RED);

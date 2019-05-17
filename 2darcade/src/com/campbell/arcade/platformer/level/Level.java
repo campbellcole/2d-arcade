@@ -24,23 +24,29 @@ public class Level {
 	public String id, name;
 	
 	public void load() {
+		System.out.println("[Level] loading level...");
 		Level passthrough = this;
 		Thread t = new Thread() {
 			
 			@Override
 			public void run() {
 				try {
+					System.out.println("[Level->LoadingThread] opening level file...");
 					FileInputStream fis = new FileInputStream(f);
 					BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 					String line;
 					id = br.readLine();
 					name = br.readLine();
+					System.out.println("[Level->LoadingThread] got level " + name + " with id " + id);
 					int ix = 0;
+					System.out.println("[Level->LoadingThread] phase 1 interpreting...");
 					while ((line = br.readLine()) != null) {
 						data[ix++] = LevelReader.interpret(line);
 					}
+					System.out.println("[Level->LoadingThread] phase 2 interpreting...");
 					ld = LevelReader.interpret(data, passthrough);
 					br.close();
+					System.out.println("[Level->LoadingThread] finished. calling back...");
 					((Platformer) Manager.instance.currentGame).levelDidLoad();
 				} catch (Exception e) {
 					e.printStackTrace();

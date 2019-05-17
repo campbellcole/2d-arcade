@@ -26,7 +26,7 @@ public class DodgeBlockMenu implements Game {
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
-		
+		System.out.println("[DodgeBlockMenu] initializing...");
 	}
 
 	boolean choseDif = false;

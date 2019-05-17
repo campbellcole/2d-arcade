@@ -77,7 +77,6 @@ public class Manager extends JFrame implements Runnable {
 		g = (Graphics2D) img.getGraphics();
 		Settings.reloadPost();
 		setSize(Settings.POSTWIDTH, Settings.POSTHEIGHT);
-		setLocationRelativeTo(null);
 		return g;
 	}
 

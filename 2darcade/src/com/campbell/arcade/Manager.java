@@ -30,7 +30,7 @@ public class Manager extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final String version = "0.8.9";
+	public static final String version = "0.9.0-prerelease";
 
 	public static List<Game> games = new ArrayList<Game>();
 	public static Manager instance;

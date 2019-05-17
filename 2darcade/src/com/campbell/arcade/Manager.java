@@ -21,6 +21,7 @@ import com.campbell.arcade.common.Game;
 import com.campbell.arcade.common.GameKeyListener;
 import com.campbell.arcade.common.Settings;
 import com.campbell.arcade.dodgeblock.DodgeBlockMenu;
+import com.campbell.arcade.feedback.FeedbackScene;
 import com.campbell.arcade.instructions.Instructions;
 import com.campbell.arcade.introscene.IntroScene;
 import com.campbell.arcade.platformer.Platformer;
@@ -30,7 +31,7 @@ public class Manager extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final String version = "0.9.1-prerelease";
+	public static final String version = "0.9.2-prerelease";
 
 	public static List<Game> games = new ArrayList<Game>();
 	public static Manager instance;
@@ -125,6 +126,7 @@ public class Manager extends JFrame implements Runnable {
 		games.add(new DodgeBlockMenu(null));
 		games.add(new Snake(null));
 		games.add(new Platformer(null));
+		games.add(new FeedbackScene(null));
 		for (Game g : games) {
 			System.out.println("[Manager] registered " + g.getName());
 		}
@@ -149,9 +151,10 @@ public class Manager extends JFrame implements Runnable {
 
 	@Override
 	public void run() {
+		ArrayList<Integer> p;
 		while (running) {
 			long time = System.currentTimeMillis();
-			ArrayList<Integer> p = GameKeyListener.getPendingKeys();
+			p = GameKeyListener.getPendingKeys();
 			if (p.indexOf(KeyEvent.VK_ESCAPE) != -1) {
 				if (currentGame instanceof IntroScene) {
 					System.exit(0);

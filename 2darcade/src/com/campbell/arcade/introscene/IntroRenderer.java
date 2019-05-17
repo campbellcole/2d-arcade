@@ -58,6 +58,9 @@ public class IntroRenderer implements Renderer {
 		}
 		g.setFont(Settings.getFont(10));
 		g.setColor(Color.white);
+		g.drawString("Campbell Cole", 3, PlatformerSettings.HEIGHT-290);
+		g.drawString("Period 3 - Spring", 3, PlatformerSettings.HEIGHT-275);
+		g.drawString("AP computer science A", 3, PlatformerSettings.HEIGHT-260);
 		g.drawString("v"+Manager.version, 3, PlatformerSettings.HEIGHT-245);
 	}
 	
@@ -80,7 +83,7 @@ public class IntroRenderer implements Renderer {
 			}
 		}
 		g.setColor(Settings.TXT);
-		g.fillRect(dxOffset-5, dyOffset-22, 413, (lines.length*35));
+		g.fillRect(dxOffset-5, dyOffset-23, 413, (lines.length*35));
 		
 		g.setColor(Color.black);
 		for (String s : lines) {

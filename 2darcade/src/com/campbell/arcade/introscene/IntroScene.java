@@ -44,7 +44,9 @@ public class IntroScene implements Game {
 				}
 			}
 			if (p.get(i) == KeyEvent.VK_ENTER) {
-				Manager.instance.setGame(Manager.games.get((int) dh.get("sel")));
+				if (!Manager.games.get((int) dh.get("sel")).getName().equals("Instructions")) {
+					Manager.instance.setGame(Manager.games.get((int) dh.get("sel")));
+				}
 			}
 		}
 	}

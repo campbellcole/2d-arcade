@@ -83,10 +83,7 @@ public class DodgeBlock implements Game {
 								grid[x][y - 1] = BlockType.PLAYER;
 							}
 						}
-						pendingUp = false; // reset pending up to stop movement
-						pendingDown = false;
-						pendingLeft = false;
-						pendingRight = false;
+						pendingUp = false;
 					}
 					if (pendingDown) { // if down was pressed
 						if (y >= 0 && y < grid[x].length - 1) { // make sure they're not gonna move off the screen and
@@ -100,10 +97,7 @@ public class DodgeBlock implements Game {
 								grid[x][y + 1] = BlockType.PLAYER;
 							}
 						}
-						pendingUp = false; // reset pending up to stop movement
 						pendingDown = false;
-						pendingLeft = false;
-						pendingRight = false;
 					}
 					if (pendingLeft) { // you get the point
 						if (x > 0 && x <= grid.length - 1) {
@@ -116,10 +110,7 @@ public class DodgeBlock implements Game {
 								grid[x - 1][y] = BlockType.PLAYER;
 							}
 						}
-						pendingUp = false; // reset pending up to stop movement
-						pendingDown = false;
 						pendingLeft = false;
-						pendingRight = false;
 					}
 					if (pendingRight) { // you get the point
 						if (x >= 0 && x < grid.length - 1) {
@@ -132,9 +123,6 @@ public class DodgeBlock implements Game {
 								grid[x + 1][y] = BlockType.PLAYER;
 							}
 						}
-						pendingUp = false; // reset pending up to stop movement
-						pendingDown = false;
-						pendingLeft = false;
 						pendingRight = false;
 					}
 					// NOTE: we reset all pending because the player will move but the current index
@@ -224,6 +212,10 @@ public class DodgeBlock implements Game {
 	}
 
 	private void checkKeys() {
+		pendingUp = false;
+		pendingDown = false;
+		pendingLeft = false;
+		pendingRight = false;
 		ArrayList<Integer> p = GameKeyListener.getPendingKeys();
 		for (int i = 0; i < p.size(); i++) {
 			if (p.get(i) == KeyEvent.VK_W || p.get(i) == KeyEvent.VK_UP) {
@@ -251,6 +243,7 @@ public class DodgeBlock implements Game {
 				break;
 			}
 		}
+		GameKeyListener.reset();
 	}
 
 	@Override

@@ -35,7 +35,7 @@ public class PlatformerRenderer implements Renderer {
 		try {
 			BufferedImage bg = new BufferedImage(PlatformerSettings.WIDTH, PlatformerSettings.HEIGHT, BufferedImage.TYPE_INT_RGB);
 			Graphics2D bgG = bg.createGraphics();
-			Image single = ImageIO.read(Textures.getURL("bg1.png"));
+			Image single = ImageIO.read(Textures.getURL("mario.jpg"));
 			int sx = single.getWidth(null);
 			int sy = single.getHeight(null);
 			int xmod = 0, ymod = 0;
@@ -63,25 +63,37 @@ public class PlatformerRenderer implements Renderer {
 		this.msgTimer = 240;
 	}
 	
+	public void displayMessageHard(String message) {
+		this.message = message;
+		this.msgTimer = -2;
+	}
+	
+	public void hideMessageHard() {
+		this.msgTimer = 0;
+	}
+	
 	@Override
 	public void draw() {
 		g.drawImage(background, 0, 0, null);
-		for (Tile t : instance.currentLevel.ld.getTiles()) {
-			if (t.getName().equals("tileblank")) continue;
-			Image img = Textures.get(t.getClass());
-			g.drawImage(img, t.x, t.y, null);
+		if (!instance.loading) {
+			for (Tile t : instance.currentLevel.ld.getTiles()) {
+				if (t.getName().equals("tileblank")) continue;
+				Image img = Textures.get(t.getClass());
+				g.drawImage(img, t.x, t.y, null);
+			}
+			for (Entity e : instance.currentLevel.ld.getEntities()) {
+				Image img = Textures.get(e.getClass());
+				g.drawImage(img, e.x, e.y, null);
+			}
 		}
-		for (Entity e : instance.currentLevel.ld.getEntities()) {
-			Image img = Textures.get(e.getClass());
-			g.drawImage(img, e.x, e.y, null);
-		}
-		if (msgTimer-- > 0) {
+		if (msgTimer > 0 || msgTimer == -2) {
 			g.setFont(Settings.getFont(30));
 			FontMetrics m = g.getFontMetrics();
 			int cX = (Settings.POSTWIDTH - m.stringWidth(message))/2;
 			int cY = ((Settings.POSTHEIGHT - m.getHeight())/2);
 			g.setColor(Settings.TXT);
 			g.drawString(message, cX, cY);
+			if (msgTimer != -2) msgTimer--;
 		}
 	}
 	

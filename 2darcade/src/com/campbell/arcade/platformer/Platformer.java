@@ -21,6 +21,7 @@ public class Platformer implements Game {
 	PlatformerRenderer r;
 	
 	Level currentLevel;
+	boolean loading = false;
 	
 	public Platformer(Graphics2D g) {
 		this.g = g;
@@ -35,12 +36,12 @@ public class Platformer implements Game {
 		LevelHandler.initialize();
 		
 		// temporary - display level 0
-		currentLevel = LevelHandler.getLevels().get(0);
-		currentLevel.load();
+		loadLevel(LevelHandler.getLevels().get(0));
 	}
 
 	@Override
 	public void update() {
+		if (loading) return;
 		for (Entity ent : currentLevel.ld.getEntities()) {
 			ent.tick();
 		}
@@ -50,11 +51,11 @@ public class Platformer implements Game {
 			case NEXTLEVEL:
 				currentLevel = LevelHandler.getLevels().get(Integer.parseInt(ev.data));
 			case RESTART:
-				currentLevel.load();
+				loadLevel(currentLevel);
 				break;
 			case DEATH:
 				r.displayMessage(ev.data);
-				currentLevel.load();
+				loadLevel(currentLevel);
 				break;
 			case REMOVE:
 				int hash = Integer.parseInt(ev.data);
@@ -73,6 +74,18 @@ public class Platformer implements Game {
 		}
 	}
 
+	public void loadLevel(Level lvl) {
+		loading = true;
+		currentLevel = lvl;
+		currentLevel.load();
+		r.displayMessageHard("Loading...");
+	}
+	
+	public void levelDidLoad() {
+		r.hideMessageHard();
+		loading = false;
+	}
+	
 	@Override
 	public void resize() {
 		g = Manager.instance.modifySize(PlatformerSettings.WIDTH, PlatformerSettings.HEIGHT);

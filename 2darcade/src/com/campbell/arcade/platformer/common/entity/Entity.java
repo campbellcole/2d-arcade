@@ -63,6 +63,12 @@ public class Entity extends Drawable {
 		}
 	}
 	
+	public void forceJump() {
+		jumped = false;
+		grav_vel = 0;
+		jump();
+	}
+	
 	public int validate(int x, int y) {
 		if (isTouchingEdge(x, y)) return -1;
 		Tile t;

@@ -35,7 +35,7 @@ public class Manager extends JFrame implements Runnable {
 
 	Thread thread;
 
-	Game currentGame;
+	public Game currentGame;
 
 	BufferedImage img;
 	Graphics2D g;

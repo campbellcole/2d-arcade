@@ -41,9 +41,15 @@ public class Player extends Entity {
 	
 	@Override
 	public void handleCollide(Entity e) {
-		String entName = Dictionary.n.get(e.getClass());
-		PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "Killed by " + entName);
-		Platformer.eventQueue.add(ev);
+		if (y <= (e.y - 10)) {
+			PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.REMOVE, ""+e.hashCode());
+			Platformer.eventQueue.add(ev);
+			forceJump();
+		} else {
+			String entName = Dictionary.n.get(e.getClass());
+			PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "Killed by " + entName);
+			Platformer.eventQueue.add(ev);
+		}
 	}
 
 }

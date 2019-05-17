@@ -1,5 +1,6 @@
 package com.campbell.arcade.introscene;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.campbell.arcade.Manager;
@@ -19,7 +20,7 @@ public class IntroRenderer implements Renderer {
 		this.idh = instance.dh;
 	}
 
-	final int dyOffsetDef = 80;
+	final int dyOffsetDef = 100;
 	
 	int xOffset = 7;
 	int yOffset;
@@ -27,11 +28,17 @@ public class IntroRenderer implements Renderer {
 	@Override
 	public void draw() {
 		yOffset = 35;
+		
 		g.setColor(Settings.BG);
 		g.fillRect(0, 0, Settings.POSTWIDTH, Settings.POSTHEIGHT);
+		
+		g.setColor(Color.decode("#850090"));
+		g.fillRect(5, 5, Settings.POSTWIDTH-15, 40);
+		
 		g.setColor(Settings.TXT);
 		g.setFont(Settings.getFont(31));
 		g.drawString("2D Arcade by Campbell Cole", 9, yOffset);
+		
 		g.setFont(Settings.getFont(16));
 		yOffset = dyOffsetDef;
 		int selected = (int) idh.get("sel");
@@ -43,6 +50,9 @@ public class IntroRenderer implements Renderer {
 			g.drawString(Manager.games.get(i).getName(), xOffset, yOffset);
 			yOffset += 30;
 		}
+		
+		g.setColor(Color.decode("#850090"));
+		g.drawRect(xOffset-5, dyOffsetDef-20, dxOffset-45, yOffset-100);
 	}
 	
 	int dxOffset = 230;

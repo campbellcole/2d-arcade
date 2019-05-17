@@ -3,8 +3,11 @@ package com.campbell.arcade.platformer.common;
 import java.awt.Image;
 import java.net.URL;
 
+import com.campbell.arcade.platformer.Platformer;
 import com.campbell.arcade.platformer.PlatformerSettings;
 import com.campbell.arcade.platformer.Textures;
+import com.campbell.arcade.platformer.common.PlatformerEvent.PlatformerEventType;
+import com.campbell.arcade.platformer.common.entity.Player;
 import com.campbell.arcade.platformer.level.Level;
 
 public class Drawable {
@@ -52,6 +55,11 @@ public class Drawable {
 	public boolean isTouchingEdge(int x, int y) {
 		boolean x1 = x<=0;
 		boolean x2 = x>=PlatformerSettings.WIDTH-16;
+		if (x2 && this instanceof Player) {
+			int nextID = Integer.parseInt(""+lvl.id.charAt(lvl.id.length()-1));
+			Platformer.eventQueue.add(new PlatformerEvent(PlatformerEventType.NEXTLEVEL, ""+(++nextID)));
+			return false;
+		}
 		boolean y1 = y<=0;
 		boolean y2 = y>=PlatformerSettings.HEIGHT-16;
 		return x1 || x2 || y1 || y2;

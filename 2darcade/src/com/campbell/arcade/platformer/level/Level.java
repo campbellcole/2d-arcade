@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
+import com.campbell.arcade.Manager;
+import com.campbell.arcade.platformer.Platformer;
 import com.campbell.arcade.platformer.PlatformerSettings;
 
 public class Level {
@@ -22,21 +24,31 @@ public class Level {
 	public String id, name;
 	
 	public void load() {
-		try {
-			FileInputStream fis = new FileInputStream(f);
-			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-			String line;
-			id = br.readLine();
-			name = br.readLine();
-			int ix = 0;
-			while ((line = br.readLine()) != null) {
-				data[ix++] = LevelReader.interpret(line);
+		Level passthrough = this;
+		Thread t = new Thread() {
+			
+			@Override
+			public void run() {
+				try {
+					FileInputStream fis = new FileInputStream(f);
+					BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+					String line;
+					id = br.readLine();
+					name = br.readLine();
+					int ix = 0;
+					while ((line = br.readLine()) != null) {
+						data[ix++] = LevelReader.interpret(line);
+					}
+					ld = LevelReader.interpret(data, passthrough);
+					br.close();
+					((Platformer) Manager.instance.currentGame).levelDidLoad();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-			ld = LevelReader.interpret(data, this);
-			br.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			
+		};
+		t.start();
 	}
 	
 }

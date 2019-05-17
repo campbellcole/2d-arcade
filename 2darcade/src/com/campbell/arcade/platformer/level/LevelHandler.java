@@ -1,7 +1,5 @@
 package com.campbell.arcade.platformer.level;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +12,12 @@ public class LevelHandler {
 	public static void initialize() {
 		System.out.println("[LevelHandler] initializing...");
 		// locate (do not load) levels
-		try {
-			File f = new File(Manager.class.getResource("/res/platformer/levels").toURI());
-			if (f.isDirectory()) {
-				for (File lf : f.listFiles()) {
-					System.out.println("[LevelHandler] located level " + lf.getName());
-					levels.add(new Level(lf));
-				}
-			}
-		} catch (URISyntaxException e) {}
+		int index = 0;
+		while (Manager.class.getResourceAsStream("/res/platformer/levels/level"+(index)+".level") != null) {
+			levels.add(new Level(index));
+			System.out.println("[LevelHandler] located level level"+index+".level");
+			index++;
+		}
 	}
 	
 	public static List<Level> getLevels() {

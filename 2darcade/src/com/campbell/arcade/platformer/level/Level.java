@@ -1,8 +1,7 @@
 package com.campbell.arcade.platformer.level;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import com.campbell.arcade.Manager;
@@ -13,15 +12,15 @@ public class Level {
 	
 	public byte[][][] data = new byte[PlatformerSettings.HEIGHT/16][PlatformerSettings.WIDTH/16][2];
 	
-	File f;
+	int index;
 	
 	public LevelData ld;
 	
-	public Level(File f) {
-		this.f = f;
+	public Level(int index) {
+		this.index = index;
 	}
 	
-	public String id, name;
+	public String id;
 	
 	public void load() {
 		System.out.println("[Level] loading level...");
@@ -32,12 +31,11 @@ public class Level {
 			public void run() {
 				try {
 					System.out.println("[Level->LoadingThread] opening level file...");
-					FileInputStream fis = new FileInputStream(f);
+					InputStream fis = Manager.class.getResourceAsStream("/res/platformer/levels/level"+index+".level");
 					BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 					String line;
 					id = br.readLine();
-					name = br.readLine();
-					System.out.println("[Level->LoadingThread] got level " + name + " with id " + id);
+					System.out.println("[Level->LoadingThread] got level index " + index);
 					int ix = 0;
 					System.out.println("[Level->LoadingThread] phase 1 interpreting...");
 					while ((line = br.readLine()) != null) {

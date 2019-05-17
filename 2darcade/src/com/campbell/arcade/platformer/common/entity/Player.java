@@ -41,11 +41,14 @@ public class Player extends Entity {
 	
 	@Override
 	public void handleCollide(Entity e) {
+		System.out.println("[Player] handling collision...");
 		if (y <= (e.y - 10)) {
+			System.out.println("[Player] landed on top of entity. sending remove event...");
 			PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.REMOVE, ""+e.hashCode());
 			Platformer.eventQueue.add(ev);
 			forceJump();
 		} else {
+			System.out.println("[Player] killed by entity. sending death event...");
 			String entName = Dictionary.n.get(e.getClass());
 			PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "Killed by " + entName + "!");
 			Platformer.eventQueue.add(ev);

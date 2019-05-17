@@ -58,6 +58,7 @@ public class Platformer implements Game {
 			System.out.println("[Platformer] new event: " + ev.type.name());
 			switch (ev.type) {
 			case NEXTLEVEL:
+				if (loading) break;
 				try {
 					currentLevel = LevelHandler.getLevels().get(Integer.parseInt(ev.data));
 					System.out.println("[Platformer] loading next level...");

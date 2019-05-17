@@ -7,6 +7,7 @@ import com.campbell.arcade.Manager;
 import com.campbell.arcade.common.DataHandler;
 import com.campbell.arcade.common.Renderer;
 import com.campbell.arcade.common.Settings;
+import com.campbell.arcade.platformer.PlatformerSettings;
 
 public class IntroRenderer implements Renderer {
 
@@ -20,7 +21,8 @@ public class IntroRenderer implements Renderer {
 		this.idh = instance.dh;
 	}
 
-	final int dyOffsetDef = 100;
+	final int gyOffsetDef = 100;
+	final int dyOffsetDef = 110;
 	
 	int xOffset = 7;
 	int yOffset;
@@ -29,30 +31,34 @@ public class IntroRenderer implements Renderer {
 	public void draw() {
 		yOffset = 35;
 		
-		g.setColor(Settings.BG);
+		g.setColor(Color.black);
 		g.fillRect(0, 0, Settings.POSTWIDTH, Settings.POSTHEIGHT);
 		
 		g.setColor(Color.decode("#850090"));
-		g.fillRect(5, 5, Settings.POSTWIDTH-15, 40);
+		g.fillRect(5, 5, Settings.POSTWIDTH-15, 42);
 		
 		g.setColor(Settings.TXT);
 		g.setFont(Settings.getFont(31));
 		g.drawString("2D Arcade by Campbell Cole", 9, yOffset);
 		
+		g.setColor(Settings.TXT);
 		g.setFont(Settings.getFont(16));
-		yOffset = dyOffsetDef;
+		
+		yOffset = gyOffsetDef;
 		int selected = (int) idh.get("sel");
 		for (int i = 0; i < Manager.games.size(); i++) {
 			if (i == selected) {
 				drawDesc(i);
 				Settings.sel(g);
 			} else Settings.desel(g);
-			g.drawString(Manager.games.get(i).getName(), xOffset, yOffset);
-			yOffset += 30;
+			g.drawString(Manager.games.get(i).getName(), xOffset+2, yOffset);
+			g.drawLine(xOffset+2, yOffset+10, xOffset+30, yOffset+10);
+			g.drawLine(xOffset+2, yOffset+15, xOffset+15, yOffset+15);
+			yOffset += 45;
 		}
-		
-		g.setColor(Color.decode("#850090"));
-		g.drawRect(xOffset-5, dyOffsetDef-20, dxOffset-45, yOffset-100);
+		g.setFont(Settings.getFont(10));
+		g.setColor(Color.white);
+		g.drawString("v"+Manager.version, 3, PlatformerSettings.HEIGHT-245);
 	}
 	
 	int dxOffset = 230;
@@ -60,8 +66,8 @@ public class IntroRenderer implements Renderer {
 	
 	public void drawDesc(int i) {
 		g.setFont(Settings.getFont(18));
+		dxOffset = 220;
 		dyOffset = dyOffsetDef;
-		g.setColor(Settings.TXT);
 		String desc = Manager.games.get(i).getDescription();
 		String[] split = desc.split(" ");
 		String[] lines = new String[(desc.length()/30)+1];
@@ -73,10 +79,14 @@ public class IntroRenderer implements Renderer {
 				line++;
 			}
 		}
+		g.setColor(Settings.TXT);
+		g.fillRect(dxOffset-5, dyOffset-22, 413, (lines.length*35));
+		
+		g.setColor(Color.black);
 		for (String s : lines) {
 			if (s == null) continue;
 			g.drawString(s, dxOffset, dyOffset);
-			dyOffset += 30;
+			dyOffset += 35;
 		}
 	}
 

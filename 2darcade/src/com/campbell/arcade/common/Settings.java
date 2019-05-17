@@ -32,8 +32,8 @@ public class Settings {
 	}
 	
 	public static Color BG = Color.LIGHT_GRAY;
-	public static Color TXT = Color.decode("#1c1c1c");
-	public static Color SEL = Color.decode("#612177");
+	public static Color TXT = Color.decode("#d6d6d6");
+	public static Color SEL = Color.decode("#9d34c1");
 	
 	public static void sel(Graphics2D g) {
 		g.setColor(Settings.SEL);

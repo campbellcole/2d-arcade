@@ -1,8 +1,12 @@
 package com.campbell.arcade.platformer.level;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 import com.campbell.arcade.Manager;
 import com.campbell.arcade.platformer.Platformer;
@@ -41,6 +45,7 @@ public class Level {
 					while ((line = br.readLine()) != null) {
 						data[ix++] = LevelReader.interpret(line);
 					}
+					//writeExpandedLevel();
 					System.out.println("[Level->LoadingThread] phase 2 interpreting...");
 					ld = LevelReader.interpret(data, passthrough);
 					br.close();
@@ -53,6 +58,25 @@ public class Level {
 			
 		};
 		t.start();
+	}
+	
+	public void writeExpandedLevel() {
+		System.out.println("[Level->LoadingThread] saving expanded file...");
+		try {
+			PrintWriter pw = new PrintWriter(new FileOutputStream(new File("level"+index+".dlevel")));
+			for (int x = 0; x < data.length; x++) {
+				for (int y = 0; y < data[x].length; y++) {
+					pw.append((char)data[x][y][0]);
+				}
+				for (int y = 0; y < data[x].length; y++) {
+					pw.append((char)data[x][y][1]);
+				}
+				pw.append('\n');
+			}
+			pw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

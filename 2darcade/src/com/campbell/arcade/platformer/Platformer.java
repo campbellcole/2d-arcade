@@ -123,6 +123,7 @@ public class Platformer implements Game {
 	@Override
 	public void resize() {
 		g = Manager.instance.modifySize(PlatformerSettings.WIDTH, PlatformerSettings.HEIGHT);
+		Manager.instance.setLocationRelativeTo(null);
 		r = new PlatformerRenderer(g, this);
 	}
 

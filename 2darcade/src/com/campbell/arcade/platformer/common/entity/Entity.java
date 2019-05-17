@@ -46,7 +46,16 @@ public class Entity extends Drawable {
 		checkTouching();
 		int newX = (int) Math.round(x + Math.cos(direction) * steps * velocity);
 		int newY = (int) Math.round(y + Math.sin(direction) * steps * velocity);
-		if (validate(newX, newY) != VALID) return;
+		int res = validate(newX, newY);
+		if (res != VALID) {
+			if (res == EDGE) {
+				handleCollideWithEdge();
+				return;
+			} else {
+				handleCollide(touching.get(res));
+				return;
+			}
+		}
 		x = newX;
 		y = newY;
 	}
@@ -83,6 +92,10 @@ public class Entity extends Drawable {
 		direction = degrees * d_r;
 	}
 	
+	public int getDegrees() {
+		return (int)(direction/d_r);
+	}
+	
 	public double getDirection() {
 		return direction;
 	}
@@ -109,6 +122,10 @@ public class Entity extends Drawable {
 	
 	public void handleCollide(Entity e) {}
 	
+	public void handleCollide(Tile t) {}
+	
+	public void handleCollideWithEdge() {}
+	
 	protected void updatePosition() {
 		double ymod = -(grav_vel -= grav_vel >= MAX_FALL_SPEED ? GRAVITY : 0);
 		int res = validate(x, (int)(y+ymod));
@@ -118,9 +135,9 @@ public class Entity extends Drawable {
 			if (res != EDGE) {
 				if (!(touching.get(res).y+16<y)) {
 					y = touching.get(res).y-17;
-					grav_vel = 0;
 					jumped = false;
 				}
+				grav_vel = 0;
 			} else {
 				if (this instanceof Player) {
 					PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "You died.");

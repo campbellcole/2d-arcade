@@ -42,7 +42,7 @@ public class Player extends Entity {
 	@Override
 	public void handleCollide(Entity e) {
 		System.out.println("[Player] handling collision...");
-		if (y <= (e.y - 10)) {
+		if (y <= (e.y - 15)) {
 			System.out.println("[Player] landed on top of entity. sending remove event...");
 			PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.REMOVE, ""+e.hashCode());
 			Platformer.eventQueue.add(ev);

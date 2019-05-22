@@ -266,7 +266,7 @@ public class DodgeBlock implements Game {
 
 	@Override
 	public String getDescription() {
-		return "non-selectable. if you see this fuck you.";
+		return "dodgeblock game";
 	}
 
 }

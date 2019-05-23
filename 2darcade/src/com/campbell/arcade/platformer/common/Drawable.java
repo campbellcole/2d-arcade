@@ -12,6 +12,8 @@ import com.campbell.arcade.platformer.level.Level;
 
 public class Drawable {
 	
+	public static final int EDGE_TOP = 1, EDGE_LEFT = 2, EDGE_RIGHT = 3, EDGE_BOTTOM = 4, EDGE_NONE = 0;
+	
 	String name;
 	URL texLoc;
 	
@@ -52,17 +54,18 @@ public class Drawable {
 		return x1b && x2b && y1b && y2b;
 	}
 	
-	public boolean isTouchingEdge(int x, int y) {
-		boolean x1 = x<=0;
-		boolean x2 = x>=PlatformerSettings.WIDTH-16;
-		if (x2 && this instanceof Player) {
-			int nextID = Integer.parseInt(""+lvl.id.charAt(lvl.id.length()-1));
-			Platformer.eventQueue.add(new PlatformerEvent(PlatformerEventType.NEXTLEVEL, ""+(++nextID)));
-			return false;
+	public int isTouchingEdge(int x, int y) {
+		if (x <= 0) return EDGE_LEFT;
+		if (x>=PlatformerSettings.WIDTH-16) {
+			if (this instanceof Player) {
+				int nextID = Integer.parseInt(""+lvl.id.charAt(lvl.id.length()-1));
+				Platformer.eventQueue.add(new PlatformerEvent(PlatformerEventType.NEXTLEVEL, ""+(++nextID)));
+			}
+			return EDGE_RIGHT;
 		}
-		boolean y1 = y<=0;
-		boolean y2 = y>=PlatformerSettings.HEIGHT-16;
-		return x1 || x2 || y1 || y2;
+		if (y <= 0) return EDGE_TOP;
+		if (y >= PlatformerSettings.HEIGHT-16) return EDGE_BOTTOM;
+		return EDGE_NONE;
 	}
 	
 }

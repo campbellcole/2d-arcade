@@ -6,6 +6,7 @@ import com.campbell.arcade.platformer.common.Drawable;
 import com.campbell.arcade.platformer.common.entity.Player;
 import com.campbell.arcade.platformer.common.entity.meat.EntityMeat;
 import com.campbell.arcade.platformer.common.tile.TileBlank;
+import com.campbell.arcade.platformer.common.tile.TileBlock;
 import com.campbell.arcade.platformer.common.tile.TileDirt;
 import com.campbell.arcade.platformer.common.tile.TileGround;
 
@@ -26,6 +27,7 @@ public class Dictionary {
 		n.put(EntityMeat.class, "meatyman");
 		
 		d.put('0', TileBlank.class);
+		d.put('B', TileBlock.class);
 		d.put('G', TileGround.class);
 		d.put('D', TileDirt.class);
 		

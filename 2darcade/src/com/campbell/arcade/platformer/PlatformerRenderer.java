@@ -82,9 +82,8 @@ public class PlatformerRenderer implements Renderer {
 		g.drawImage(background, 0, 0, null);
 		if (!instance.loading) {
 			for (Tile t : instance.currentLevel.ld.getTiles()) {
-				if (t.getName().equals("tileblank")) continue;
 				Image img = Textures.get(t.getClass());
-				g.drawImage(img, t.x, t.y, null);
+				if (img != null) g.drawImage(img, t.x, t.y, null);
 			}
 			for (Entity e : instance.currentLevel.ld.getEntities()) {
 				Image img = Textures.get(e.getClass());

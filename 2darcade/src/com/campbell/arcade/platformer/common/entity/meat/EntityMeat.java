@@ -20,7 +20,7 @@ public class EntityMeat extends Entity {
 	}
 	
 	@Override
-	public void handleCollideWithEdge() {
+	public void handleCollideWithEdge(int edge) {
 		ai.handleCollideWithEdge();
 	}
 	

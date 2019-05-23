@@ -13,7 +13,7 @@ import com.campbell.arcade.platformer.level.Level;
 public class Entity extends Drawable {
 	
 	public static final int RIGHT = 0, DOWN = 90, LEFT = 180, UP = 270, NULL = -1;
-	final int VALID = -2, EDGE = -1;
+	final int BLOCK = -3, VALID = -2, EDGE = -1;
 	
 	final int JUMP_HEIGHT = 5, MAX_FALL_SPEED = -5;
 	final double GRAVITY = 0.2;
@@ -49,8 +49,10 @@ public class Entity extends Drawable {
 		int res = validate(newX, newY);
 		if (res != VALID) {
 			if (res == EDGE) {
-				handleCollideWithEdge();
+				handleCollideWithEdge(isTouchingEdge(newX, newY));
 				return;
+			} else if (res == BLOCK) {
+				handleCollide((Tile)null);
 			} else {
 				handleCollide(touching.get(res));
 				return;
@@ -79,13 +81,16 @@ public class Entity extends Drawable {
 	}
 	
 	public int validate(int x, int y) {
-		if (isTouchingEdge(x, y)) return -1;
+		if (isTouchingEdge(x, y) != Drawable.EDGE_NONE) return EDGE;
 		Tile t;
 		for (int i = 0; i < touching.size(); i++) {
 			t = touching.get(i);
-			if (isOverlapping(x, y, t.x, t.y) && t.isSolid()) return i;
+			if (isOverlapping(x, y, t.x, t.y)) {
+				if (t.isSolid()) return i;
+				else if (t.getName().contentEquals("tileblock")) return BLOCK;
+			}
 		}
-		return -2;
+		return VALID;
 	}
 	
 	public void setDirection(int degrees) {
@@ -103,13 +108,13 @@ public class Entity extends Drawable {
 	private void checkTouching() {
 		touching.clear();
 		for (Tile t : lvl.ld.getTiles()) {
-			if (isOverlapping(x+16, y, t.x, t.y) && t.isSolid())
+			if (isOverlapping(x+16, y, t.x, t.y))
 				touching.add(t);
-			if (isOverlapping(x, y+16, t.x, t.y) && t.isSolid())
+			if (isOverlapping(x, y+16, t.x, t.y))
 				touching.add(t);
-			if (isOverlapping(x-16, y, t.x, t.y) && t.isSolid())
+			if (isOverlapping(x-16, y, t.x, t.y))
 				touching.add(t);
-			if (isOverlapping(x, y-16, t.x, t.y) && t.isSolid())
+			if (isOverlapping(x, y-16, t.x, t.y))
 				touching.add(t);
 		}
 	}
@@ -124,29 +129,29 @@ public class Entity extends Drawable {
 	
 	public void handleCollide(Tile t) {}
 	
-	public void handleCollideWithEdge() {}
+	public void handleCollideWithEdge(int edge) {
+		if (edge == Drawable.EDGE_BOTTOM) {
+			PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.REMOVE, ""+this.hashCode());
+			Platformer.eventQueue.add(ev);
+		} else if (edge == Drawable.EDGE_TOP) {
+			grav_vel = 0;
+		}
+	}
 	
 	protected void updatePosition() {
 		double ymod = -(grav_vel -= grav_vel >= MAX_FALL_SPEED ? GRAVITY : 0);
 		int res = validate(x, (int)(y+ymod));
-		if (res == VALID) {
+		if (res == VALID || res == BLOCK) {
 			y += ymod;
 		} else {
-			if (res != EDGE) {
+			if (res != EDGE && res != BLOCK) {
 				if (!(touching.get(res).y+16<y)) {
 					y = touching.get(res).y-17;
 					jumped = false;
 				}
 				grav_vel = 0;
 			} else {
-				if (this instanceof Player) {
-					PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "You died.");
-					Platformer.eventQueue.add(ev);
-				} else {
-					PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.REMOVE, ""+this.hashCode());
-					Platformer.eventQueue.add(ev);
-				}
-				// goodbye :)
+				handleCollideWithEdge(isTouchingEdge(x, (int)(y+ymod)));
 			}
 		}
 	}

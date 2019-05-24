@@ -50,6 +50,7 @@ public class FeedbackScene implements Game {
 			} else if (p.get(i) == KeyEvent.VK_SPACE) {
 				input += " ";
 			} else {
+				if (KeyEvent.getKeyText(p.get(i)).length() > 1) return;
 				char c = KeyEvent.getKeyText(p.get(i)).charAt(0);
 				if (Character.isAlphabetic(c) || Character.isDigit(c)) {
 					input += c;

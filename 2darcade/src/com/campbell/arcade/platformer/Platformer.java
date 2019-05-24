@@ -1,11 +1,15 @@
 package com.campbell.arcade.platformer;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import com.campbell.arcade.Manager;
 import com.campbell.arcade.common.Game;
+import com.campbell.arcade.common.GameKeyListener;
 import com.campbell.arcade.common.Renderer;
 import com.campbell.arcade.introscene.IntroScene;
 import com.campbell.arcade.platformer.common.PlatformerEvent;
@@ -49,6 +53,10 @@ public class Platformer implements Game {
 
 	@Override
 	public void update() {
+		if (GameKeyListener.getPendingKeys().contains(KeyEvent.VK_R)) {
+			Platformer.eventQueue.add(new PlatformerEvent(PlatformerEventType.RESTART, null));
+			GameKeyListener.reset();
+		}
 		if (loading) return;
 		for (Entity ent : currentLevel.ld.getEntities()) {
 			ent.tick();
@@ -65,6 +73,7 @@ public class Platformer implements Game {
 					loadLevel(currentLevel);
 				} catch (IndexOutOfBoundsException ex) {
 					System.out.println("[Platformer] no more levels, entering introscene...");
+					JOptionPane.showMessageDialog(null, "Congratulations! You finished the game.");
 					Manager.instance.setGame(new IntroScene(null));
 				}
 				break;

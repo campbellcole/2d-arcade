@@ -44,7 +44,7 @@ public class Drawable {
 		return name;
 	}
 	
-	final int HITBOX = 16;
+	final int HITBOX = PlatformerSettings.HITBOX;
 	
 	public boolean isOverlapping(int x1, int y1, int x2, int y2) {
 		boolean x1b = x1 <= x2 + HITBOX;
@@ -56,7 +56,7 @@ public class Drawable {
 	
 	public int isTouchingEdge(int x, int y) {
 		if (x <= 0) return EDGE_LEFT;
-		if (x>=PlatformerSettings.WIDTH-16) {
+		if (x>=PlatformerSettings.WIDTH-HITBOX) {
 			if (this instanceof Player) {
 				int nextID = Integer.parseInt(""+lvl.id.charAt(lvl.id.length()-1));
 				Platformer.eventQueue.add(new PlatformerEvent(PlatformerEventType.NEXTLEVEL, ""+(++nextID)));

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.campbell.arcade.platformer.Platformer;
+import com.campbell.arcade.platformer.PlatformerSettings;
 import com.campbell.arcade.platformer.common.Drawable;
 import com.campbell.arcade.platformer.common.PlatformerEvent;
 import com.campbell.arcade.platformer.common.PlatformerEvent.PlatformerEventType;
@@ -145,8 +146,8 @@ public class Entity extends Drawable {
 			y += ymod;
 		} else {
 			if (res != EDGE && res != BLOCK) {
-				if (!(touching.get(res).y+16<y)) {
-					y = touching.get(res).y-17;
+				if (!(touching.get(res).y+PlatformerSettings.HITBOX<y)) {
+					y = touching.get(res).y-(PlatformerSettings.HITBOX+1);
 					jumped = false;
 				}
 				grav_vel = 0;

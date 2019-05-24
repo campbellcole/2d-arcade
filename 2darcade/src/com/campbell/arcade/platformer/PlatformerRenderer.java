@@ -37,7 +37,7 @@ public class PlatformerRenderer implements Renderer {
 		try {
 			BufferedImage bg = new BufferedImage(PlatformerSettings.WIDTH, PlatformerSettings.HEIGHT, BufferedImage.TYPE_INT_RGB);
 			Graphics2D bgG = bg.createGraphics();
-			Image single = ImageIO.read(Textures.getURL("mario.jpg"));
+			Image single = ImageIO.read(Textures.getURL("mario.png"));
 			int sx = single.getWidth(null);
 			int sy = single.getHeight(null);
 			int xmod = 0, ymod = 0;

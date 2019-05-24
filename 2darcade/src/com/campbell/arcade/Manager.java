@@ -31,7 +31,7 @@ public class Manager extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final String version = "1.4.0-release";
+	public static final String version = "1.4.1-release";
 
 	public static List<Game> games = new ArrayList<Game>();
 	public static Manager instance;
@@ -63,13 +63,8 @@ public class Manager extends JFrame implements Runnable {
 	}
 
 	public synchronized void end() {
-		running = false;
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		System.out.println("[Manager] goodbye :)");
+		System.exit(0);
 	}
 
 	public Graphics2D modifySize(int x, int y) {

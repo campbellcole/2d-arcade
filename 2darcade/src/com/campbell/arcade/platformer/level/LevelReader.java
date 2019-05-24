@@ -7,6 +7,7 @@ import com.campbell.arcade.platformer.PlatformerSettings;
 import com.campbell.arcade.platformer.common.Drawable;
 import com.campbell.arcade.platformer.common.entity.Entity;
 import com.campbell.arcade.platformer.common.tile.Tile;
+import com.campbell.arcade.platformer.common.tile.TileBlank;
 
 public class LevelReader {
 	
@@ -91,9 +92,11 @@ public class LevelReader {
 		List<Tile> tiles = dat.getTiles();
 		for (int x = 0; x < data.length; x++) {
 			for (int y = 0; y < data[x].length; y++) {
-				Drawable tile = newInstance((char)data[x][y][0], y, x, instance);
+				if ((char)data[x][y][0] != '0') {
+					Drawable tile = newInstance((char)data[x][y][0], y, x, instance);
+					if (tile instanceof Tile && !(tile instanceof TileBlank)) tiles.add((Tile)tile);
+				}
 				Drawable ent = newInstance((char)data[x][y][1], y, x, instance);
-				if (tile instanceof Tile) tiles.add((Tile)tile);
 				if (ent instanceof Entity) ents.add((Entity)ent);
 			}
 		}

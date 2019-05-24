@@ -139,7 +139,7 @@ public class Platformer implements Game {
 
 	@Override
 	public String getDescription() {
-		return "red plumber ripoff";
+		return "if you've played mario then you might enjoy this game. it's basically mario.";
 	}
 	
 }

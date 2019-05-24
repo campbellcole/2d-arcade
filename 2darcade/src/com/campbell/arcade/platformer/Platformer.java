@@ -73,7 +73,14 @@ public class Platformer implements Game {
 					loadLevel(currentLevel);
 				} catch (IndexOutOfBoundsException ex) {
 					System.out.println("[Platformer] no more levels, entering introscene...");
-					JOptionPane.showMessageDialog(null, "Congratulations! You finished the game.");
+					new Thread() {
+						
+						@Override
+						public void run() {
+							JOptionPane.showMessageDialog(null, "Congratulations! You finished the game.");
+						}
+						
+					}.start();
 					Manager.instance.setGame(new IntroScene(null));
 				}
 				break;

@@ -145,6 +145,7 @@ public class Manager extends JFrame implements Runnable {
 		currentGame = g;
 		currentGame.resize();
 		currentGame.initialize();
+		System.gc();
 	}
 
 	@Override

@@ -52,21 +52,7 @@ public class Player extends Entity {
 			System.out.println("[Player] killed by entity. sending death event...");
 			String entName = Dictionary.n.get(e.getClass());
 			PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "Killed by " + entName + "!");
-			//Platformer.eventQueue.add(ev);
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
-			// ^^ UNCOMMENT THIS LINE BEFORE PRESENTING !!
+			Platformer.eventQueue.add(ev);
 		}
 	}
 	

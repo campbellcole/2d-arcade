@@ -28,9 +28,11 @@ public class IntroScene implements Game {
 		System.out.println("[IntroScene] initializing...");
 	}
 
+	ArrayList<Integer> p;
+	
 	@Override
 	public void update() {
-		ArrayList<Integer> p = GameKeyListener.getPendingKeys();
+		p = GameKeyListener.getPendingKeys();
 		for (int i = 0; i < p.size(); i++) {
 			if (p.get(i) == KeyEvent.VK_DOWN) {
 				if ((int) dh.get("sel") < Manager.games.size() - 1) {

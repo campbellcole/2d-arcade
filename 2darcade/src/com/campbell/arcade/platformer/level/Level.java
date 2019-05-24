@@ -50,7 +50,11 @@ public class Level {
 					ld = LevelReader.interpret(data, passthrough);
 					br.close();
 					System.out.println("[Level->LoadingThread] finished. calling back...");
-					((Platformer) Manager.instance.currentGame).levelDidLoad();
+					try {
+						((Platformer) Manager.instance.currentGame).levelDidLoad();
+					} catch (ClassCastException ex) {
+						System.out.println("[Level->LoadingThread] game changed before loading finished. oh well.");
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -31,7 +31,7 @@ public class Manager extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final String version = "1.3.0-release";
+	public static final String version = "1.4.0-release";
 
 	public static List<Game> games = new ArrayList<Game>();
 	public static Manager instance;
@@ -52,7 +52,7 @@ public class Manager extends JFrame implements Runnable {
 	}
 
 	public synchronized void begin() {
-		System.out.println("[Manager] initializing.");
+		System.out.println("[Manager] initializing...");
 		initialize();
 		System.out.println("[Manager] registering games...");
 		registerGames();
@@ -69,9 +69,11 @@ public class Manager extends JFrame implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		System.out.println("[Manager] goodbye :)");
 	}
 
 	public Graphics2D modifySize(int x, int y) {
+		System.out.println("[Manager] resizing window...");
 		Settings.WIDTH = x;
 		Settings.HEIGHT = y;
 		img = new BufferedImage(x, y, BufferedImage.TYPE_INT_RGB);
@@ -135,13 +137,14 @@ public class Manager extends JFrame implements Runnable {
 	boolean justSwitched = true;
 
 	public void setGame(Game g) {
+		System.out.println("[Manager] loading new game instance...");
 		try {
 			Class<?> c = Class.forName(g.getClass().getName());
 			Constructor<?> ct = c.getConstructor(Graphics2D.class);
 			g = (Game) ct.newInstance(new Object[] { this.g });
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(1);
+			end();
 		}
 		GameKeyListener.reset();
 		currentGame = g;
@@ -157,7 +160,7 @@ public class Manager extends JFrame implements Runnable {
 			p = GameKeyListener.getPendingKeys();
 			if (p.indexOf(KeyEvent.VK_ESCAPE) != -1) {
 				if (currentGame instanceof IntroScene) {
-					System.exit(0);
+					end();
 				}
 				p.remove(p.indexOf(KeyEvent.VK_ESCAPE));
 				GameKeyListener.setPendingKeys(p);

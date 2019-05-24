@@ -59,9 +59,11 @@ public class Player extends Entity {
 	@Override
 	public void handleCollideWithEdge(int edge) {
 		if (edge == Drawable.EDGE_RIGHT) {
+			System.out.println("[Player] touched right edge, sending nextlevel event...");
 			int nextID = Integer.parseInt(""+lvl.id.charAt(lvl.id.length()-1));
 			Platformer.eventQueue.add(new PlatformerEvent(PlatformerEventType.NEXTLEVEL, ""+(++nextID)));
 		} else if (edge == Drawable.EDGE_BOTTOM) {
+			System.out.println("[Player] touched bottom edge, sending death event...");
 			PlatformerEvent ev = new PlatformerEvent(PlatformerEventType.DEATH, "You fell off the level.");
 			Platformer.eventQueue.add(ev);
 		}

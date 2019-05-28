@@ -84,15 +84,10 @@ public class Platformer implements Game {
 					loadLevel(currentLevel);
 				} catch (IndexOutOfBoundsException ex) {
 					System.out.println("[Platformer] no more levels, entering introscene...");
-					new Thread() {
-						
-						@Override
-						public void run() {
-							JOptionPane.showMessageDialog(null, "Congratulations! You finished the game.");
-						}
-						
-					}.start();
+					JOptionPane.showMessageDialog(null, "Congratulations! You finished the game.");
 					Manager.instance.setGame(new IntroScene(null));
+					loading = true;
+					return;
 				}
 				break;
 			case RESTART:
@@ -107,7 +102,9 @@ public class Platformer implements Game {
 					@Override
 					public void run() {
 						try {
+							loading = true;
 							Thread.sleep(2000);
+							loading = false; // hacky but prevents double loading the level
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -134,6 +131,7 @@ public class Platformer implements Game {
 	}
 
 	public void loadLevel(Level lvl) {
+		if (loading) return;
 		System.out.println("[Platformer] loading level...");
 		loading = true;
 		currentLevel = lvl;

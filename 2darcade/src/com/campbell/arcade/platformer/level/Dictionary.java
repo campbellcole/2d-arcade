@@ -31,10 +31,13 @@ public class Dictionary {
 		d.put('G', TileGround.class);
 		d.put('D', TileDirt.class);
 		
-		d.put((char)0x0, TileBlank.class);
-		
 		System.out.println("[Dictionary] done.");
 		
+	}
+	
+	public static char forKey(Class<? extends Drawable> c) {
+		for (char ch : d.keySet()) if (d.get(ch).equals(c)) return ch;
+		return 0;
 	}
 	
 }

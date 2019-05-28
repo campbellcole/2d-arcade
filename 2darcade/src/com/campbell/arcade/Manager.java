@@ -25,13 +25,15 @@ import com.campbell.arcade.feedback.FeedbackScene;
 import com.campbell.arcade.instructions.Instructions;
 import com.campbell.arcade.introscene.IntroScene;
 import com.campbell.arcade.platformer.Platformer;
+import com.campbell.arcade.platformer.PlatformerSettings;
+import com.campbell.arcade.platformer.editor.PlatformerEditor;
 import com.campbell.arcade.snake.Snake;
 
 public class Manager extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static final String version = "1.4.1-release";
+	public static final String version = "1.8-release";
 
 	public static List<Game> games = new ArrayList<Game>();
 	public static Manager instance;
@@ -123,6 +125,7 @@ public class Manager extends JFrame implements Runnable {
 		games.add(new DodgeBlockMenu(null));
 		games.add(new Snake(null));
 		games.add(new Platformer(null));
+		games.add(new PlatformerEditor(null));
 		games.add(new FeedbackScene(null));
 		for (Game g : games) {
 			System.out.println("[Manager] registered " + g.getName());
@@ -147,6 +150,14 @@ public class Manager extends JFrame implements Runnable {
 		currentGame.initialize();
 		System.gc();
 	}
+	
+	public void setGameFromInstance(Game g) {
+		System.out.println("[Manager] loading stashed game instance...");
+		GameKeyListener.reset();
+		currentGame = g;
+		currentGame.resize();
+		currentGame.initialize();
+	}
 
 	@Override
 	public void run() {
@@ -157,10 +168,13 @@ public class Manager extends JFrame implements Runnable {
 			if (p.indexOf(KeyEvent.VK_ESCAPE) != -1) {
 				if (currentGame instanceof IntroScene) {
 					end();
+				} else if (currentGame instanceof Platformer && PlatformerSettings.isTesting) {
+					setGameFromInstance(PlatformerEditor.stash);
+					PlatformerSettings.isTesting = false;
+				} else {
+					GameKeyListener.reset();
+					setGame(new IntroScene(g));
 				}
-				p.remove(p.indexOf(KeyEvent.VK_ESCAPE));
-				GameKeyListener.setPendingKeys(p);
-				setGame(new IntroScene(g));
 			}
 			currentGame.update();
 			currentGame.getRenderer().draw();

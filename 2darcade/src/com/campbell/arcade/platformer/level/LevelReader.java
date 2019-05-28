@@ -17,7 +17,7 @@ public class LevelReader {
 		int tLen = s.indexOf('&');
 		char[] tc = s.substring(0, tLen).toCharArray();
 		byte[] tdata = parse(tc);
-		char[] ec = s.substring(tLen).toCharArray();
+		char[] ec = s.substring(tLen+1).toCharArray();
 		byte[] edata = parse(ec);
 		for (int y = 0; y < tdata.length; y++) {
 			i[y][0]=tdata[y];

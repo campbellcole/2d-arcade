@@ -29,10 +29,10 @@ public class PlatformerRenderer implements Renderer {
 		this.instance = instance;
 		this.message = "";
 		this.msgTimer = 0;
-		generateBackground();
+		background = generateBackground();
 	}
 	
-	public void generateBackground() {
+	public static BufferedImage generateBackground() {
 		System.out.println("[PlatformerRenderer] generating background...");
 		try {
 			BufferedImage bg = new BufferedImage(PlatformerSettings.WIDTH, PlatformerSettings.HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -54,10 +54,11 @@ public class PlatformerRenderer implements Renderer {
 				ymult -= sy;
 				ymod += sy;
 			}
-			background = bg;
+			return bg;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	public void displayMessage(String message) {

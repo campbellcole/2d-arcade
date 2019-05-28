@@ -48,7 +48,14 @@ public class Platformer implements Game {
 		
 		System.out.println("[Platformer] loading level 0...");
 		// display level 0
-		loadLevel(LevelHandler.getLevels().get(0));
+		
+		if (PlatformerSettings.isTesting) {
+			Level boofLevel = new Level(-1); // smh
+			boofLevel.data = PlatformerSettings.testingLevel;
+			loadLevel(boofLevel);
+		} else {
+			loadLevel(LevelHandler.getLevels().get(0));
+		}
 	}
 
 	@Override
@@ -67,6 +74,10 @@ public class Platformer implements Game {
 			switch (ev.type) {
 			case NEXTLEVEL:
 				if (loading) break;
+				if (PlatformerSettings.isTesting) {
+					loadLevel(currentLevel);
+					break;
+				}
 				try {
 					currentLevel = LevelHandler.getLevels().get(Integer.parseInt(ev.data));
 					System.out.println("[Platformer] loading next level...");
@@ -126,6 +137,7 @@ public class Platformer implements Game {
 		System.out.println("[Platformer] loading level...");
 		loading = true;
 		currentLevel = lvl;
+		Textures.reset();
 		currentLevel.load();
 		r.displayMessageHard("Loading...");
 	}

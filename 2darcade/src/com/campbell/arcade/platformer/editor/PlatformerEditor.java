@@ -50,11 +50,15 @@ public class PlatformerEditor implements Game {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize() {
+		System.out.println("[PlatformerEditor] initializing...");
+		
+		System.out.println("[PlatformerEditor] populating dictionary...");
 		Dictionary.initialize();
 		sels = Dictionary.d.values().toArray(new Class[0]);
 		sel = sels[0];
 		x = y = 0;
 		
+		System.out.println("[PlatformerEditor] loading textures...");
 		for (Class<? extends Drawable> c : Dictionary.d.values()) {
 			Constructor<?> ctor;
 			try {
@@ -91,16 +95,19 @@ public class PlatformerEditor implements Game {
 			}
 			
 			if (k == KeyEvent.VK_I) {
+				System.out.println("[PlatformerEditor] opening file open dialog...");
 				openLevel();
 				break; // prevents comodification exception
 			}
 			
 			if (k == KeyEvent.VK_O) {
+				System.out.println("[PlatformerEditor] opening file save dialog...");
 				saveLevel();
 				break;
 			}
 			
 			if (k == KeyEvent.VK_P) {
+				System.out.println("[PlatformerEditor] stashing self and opening Platformer with current level data...");
 				PlatformerSettings.isTesting = true;
 				PlatformerSettings.testingLevel = data;
 				stash = this;
@@ -129,9 +136,8 @@ public class PlatformerEditor implements Game {
 				br.close();
 			} catch (IOException ex) {
 				JOptionPane.showMessageDialog(null, "Unable to read level. Probably not a level.");
+				System.out.println("[PlatformerEditor] unable to read level.");
 			}
-		} else {
-			JOptionPane.showMessageDialog(null, "Invalid level. Please choose a .level file.");
 		}
 	}
 	
@@ -154,8 +160,10 @@ public class PlatformerEditor implements Game {
 					pw.append('\n');
 				}
 				pw.close();
+				System.out.println("[PlatformerEditor] wrote file.");
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Couldn't save file: " + e.getMessage());
+				System.out.println("[PlatformerEditor] couldn't save file: " + e.getMessage());
 			}
 		}
 	}
